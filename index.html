@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Taartenbakkerij</title>
+<meta name="theme-color" content="#ff9ec0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Taartenbakkerij">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--L:#6e5a7e;--ink:#5d4a6e;--soft:#9a88a8;--pink:#ff9ec0;--pinkd:#e9799f;--mint:#7fd8bf;--lila:#c9b8ff;--yellow:#ffe79a;--line:#eadcf2;--red:#ff5a7e}
+*{box-sizing:border-box}
+html{touch-action:manipulation}
+html,body{margin:0}
+body{font-family:'Baloo 2',system-ui,sans-serif;color:var(--ink);font-size:20px;min-height:100vh;background:#fff3f8 radial-gradient(#ffdcec 2.5px,transparent 3px) 0 0/30px 30px}
+button,input{-webkit-tap-highlight-color:transparent;font-family:inherit}
+button{cursor:pointer}
+svg{display:inline-block;vertical-align:middle;overflow:visible}
+header{display:flex;align-items:center;gap:10px;padding:10px 20px;max-width:1060px;margin:0 auto}
+header .home{background:#fff;border:3px solid var(--L);border-radius:16px;padding:2px 8px;box-shadow:0 4px 0 var(--L)}
+header .title{font-weight:800;font-size:26px;flex:1;color:var(--L)}
+header .chip{background:#fff;border:3px solid var(--L);border-radius:999px;padding:0 14px;font-weight:800;font-size:22px;color:var(--L)}
+header .gear{font-size:16px;font-weight:700;background:#fff;border:3px solid var(--line);border-radius:14px;padding:4px 10px;color:var(--soft)}
+@media(max-width:640px){header .title{font-size:18px}header .chip{font-size:17px;padding:0 8px}header .gear{display:none}}
+main{max-width:1060px;margin:0 auto;padding:4px 20px 60px}
+.steps{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:4px 0 14px}
+.steps span{background:#fff;border:2px solid var(--line);border-radius:999px;padding:0 12px;font-size:16px;color:var(--soft)}
+.steps span.on{background:var(--pink);border-color:var(--L);color:#fff;font-weight:800}
+.steps span.done{background:#e6f8f1;border-color:#bfe8d8;color:#3f9c80}
+.panel{background:#fff;border:3px solid var(--L);border-radius:30px;padding:20px 24px;box-shadow:0 6px 0 #e3d3ee;margin-bottom:20px}
+.center{text-align:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid2b{display:grid;grid-template-columns:360px 1fr;gap:20px}
+@media(max-width:780px){.grid2,.grid2b{grid-template-columns:1fr}}
+h2{margin:0 0 8px;font-size:30px;line-height:1.15;color:var(--L)}
+h3{margin:0 0 8px;font-size:24px;color:var(--L)}
+h3.withimg{display:flex;align-items:center;gap:8px}
+p{margin:6px 0}
+.small{font-size:16px;color:var(--soft)}
+.q{font-size:23px;line-height:1.4}
+.big{font-size:24px;font-weight:800;background:var(--pink);color:#fff;border:3px solid var(--L);border-radius:22px;padding:8px 26px;margin:8px 6px;box-shadow:0 5px 0 var(--L);text-shadow:0 2px 0 rgba(110,90,126,.35)}
+.big.mint{background:var(--mint)}.big.lila{background:var(--lila)}
+.big:hover{filter:brightness(1.05)}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--L)}
+.big:disabled{background:#e4dcea;color:#fff;box-shadow:0 5px 0 #c9bcd4;border-color:#c9bcd4;cursor:default;text-shadow:none}
+.btnrow{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+input.txt{font-size:30px;padding:8px 16px;border:3px solid var(--L);border-radius:18px;width:100%;max-width:360px;color:var(--ink);text-align:center;background:#fffafc}
+input.txt:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ffe0ee}
+.speak{border:2px solid var(--line);background:#fff;border-radius:12px;margin-left:8px;vertical-align:middle;padding:2px 4px}
+.walkin{display:block;width:max-content;margin:0 auto;animation:walk .8s ease-out}
+.blockc{display:block;width:max-content;margin:0 auto}
+@keyframes walk{from{transform:translateX(-160px) rotate(-10deg);opacity:0}to{transform:none;opacity:1}}
+.bubble{display:inline-block;background:#fff;border:3px solid var(--L);border-radius:26px;padding:12px 22px;font-size:28px;font-weight:700;position:relative;margin:10px 0 16px;max-width:640px;line-height:1.3}
+.bubble:before{content:"";position:absolute;top:-17px;left:50%;margin-left:-12px;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:16px solid var(--L)}
+.orderhead{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.pair{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.card{background:#fffafc;border:3px solid var(--line);border-radius:22px;padding:8px 8px 10px;text-align:center;font-size:19px;font-weight:700;color:var(--ink);overflow-wrap:anywhere}
+button.card:hover{border-color:var(--pink);transform:translateY(-2px)}
+.card.locked{opacity:.5;filter:grayscale(.85)}
+.card .need{font-size:15px;color:var(--soft);font-weight:500}
+.card ul{list-style:none;padding:0;margin:6px 0 0;font-size:15px;font-weight:500;text-align:left}
+.card li{display:flex;align-items:center;gap:4px}
+.rlist{list-style:none;padding:0;margin:0}
+.rlist li{display:flex;align-items:center;gap:8px;padding:3px 10px;border-radius:14px;margin-bottom:5px;background:#fffafc;border:2px solid var(--line);font-size:20px}
+.rlist .cnt{margin-left:auto;font-weight:800;color:var(--soft);white-space:nowrap}
+.rlist li.done{background:#e6f8f1;border-color:#bfe8d8}.rlist li.done .cnt{color:#3f9c80}
+.rlist li.done .cnt:after{content:" ✓"}
+.rlist li.over{background:#ffe3ea;border-color:#ffb8c8}.rlist li.over .cnt{color:var(--red)}
+.hint{background:#fff7d6;border:2px dashed #f0d27a;border-radius:14px;padding:6px 14px;display:inline-block;font-size:19px;margin:4px 0}
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px}
+.ing{background:#fffafc;border:3px solid var(--line);border-radius:20px;padding:6px 4px;font-size:17px;font-weight:700;color:var(--ink);display:flex;flex-direction:column;align-items:center}
+.ing:hover{border-color:var(--pink);transform:translateY(-2px)}
+.bowl{min-height:160px;background:#eef7ff;border:3px solid var(--L);border-top:none;border-radius:0 0 140px 140px;padding:14px 34px 40px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;gap:2px}
+.bowl button{background:none;border:none;padding:0}
+.bowl button:hover{transform:scale(1.15)}
+.mixbowl{cursor:pointer;user-select:none;display:inline-block}
+.mixbowl:active{transform:scale(.97)}
+.bar{height:22px;background:#f3e8f6;border:2px solid var(--line);border-radius:999px;overflow:hidden;max-width:420px;margin:10px auto}
+.bar div{height:100%;background:var(--mint);width:0;transition:width .25s}
+.dial{display:inline-block;font-size:46px;font-weight:800;background:#5d4a6e;color:#ffb36b;border:3px solid var(--L);border-radius:18px;padding:0 24px;margin:8px 0;min-width:200px;text-align:center}
+.dbtn{font-size:24px;font-weight:800;background:#fff;border:3px solid var(--L);box-shadow:0 4px 0 var(--L);border-radius:14px;padding:4px 16px;color:var(--L);margin:4px 2px}
+.dbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--L)}
+.opts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:10px 0}
+.opt{font-size:26px;font-weight:800;background:#fff;border:3px solid var(--L);box-shadow:0 5px 0 var(--L);border-radius:20px;padding:6px 22px;color:var(--L)}
+.opt:hover{background:#fff0f6}
+.decos,.faces{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:12px 0}
+.decos button,.facebtn{background:#fffafc;border:3px solid var(--L);box-shadow:0 5px 0 var(--L);border-radius:18px;padding:4px 6px;color:var(--ink);display:flex;flex-direction:column;align-items:center;min-width:84px}
+.decos button small,.facebtn span{font-size:15px;font-weight:700}
+.decos button:active,.facebtn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--L)}
+.facebtn.on{background:#fff0f6;border-color:var(--pinkd);box-shadow:0 5px 0 var(--pinkd);transform:scale(1.08)}
+.wish{display:inline-flex;align-items:center;gap:6px;background:#fff0f6;border:3px dashed var(--pink);border-radius:18px;padding:4px 16px;font-size:22px;margin:4px 0}
+.payrow{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;margin:8px 0}
+.tag{background:#fff7d6;border:3px dashed #e8c35a;border-radius:18px;padding:6px 16px;font-size:19px}
+.tag b{display:block;font-size:36px}
+.times{font-size:40px;font-weight:800;color:var(--L)}
+.answer{font-size:44px;font-weight:800;border:3px solid var(--L);border-radius:18px;display:inline-block;min-width:160px;padding:0 20px;margin:6px 0;color:var(--L)}
+.keypad{display:grid;grid-template-columns:repeat(3,80px);gap:9px;justify-content:center;margin-top:8px}
+.keypad button{font-size:30px;font-weight:800;height:62px;background:#fff;border:3px solid var(--L);box-shadow:0 4px 0 var(--L);border-radius:16px;color:var(--L)}
+.keypad button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--L)}
+.keypad button.ok{background:var(--mint);color:#fff}
+.bon{background:#fffdf5;border:3px dashed #d9c7e2;border-radius:16px;padding:8px 16px;margin:10px auto;max-width:260px;text-align:center;font-size:18px}
+.bon .nm{font-size:34px;font-weight:800;display:block;color:var(--L)}
+.cupbox{display:inline-block;background:#ffe0ec;border:3px solid var(--L);border-radius:12px;padding:2px 18px;font-weight:800;font-size:26px;min-width:160px;min-height:46px;margin-top:6px;font-style:italic;color:var(--L)}
+.earned{display:inline-block;text-align:left;font-size:22px;margin:8px 0}
+.earned div{padding:2px 0}
+.earned .off{opacity:.55}
+.unlock{background:#fff0f6;border:3px solid var(--pink);border-radius:22px;padding:10px 20px;margin:10px auto;max-width:520px;animation:pop .5s}
+@keyframes pop{0%{transform:scale(.5);opacity:0}80%{transform:scale(1.05)}to{transform:none;opacity:1}}
+.scenep{padding:14px}
+.scene{max-width:620px;display:block;margin:0 auto 6px}
+.decor{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:8px 0}
+.decor span{animation:pop .5s}
+.progress{height:22px;background:#f3e8f6;border:2px solid var(--line);border-radius:999px;overflow:hidden;max-width:420px;margin:6px auto}
+.progress div{height:100%;background:var(--yellow)}
+.lvl{font-size:15px;color:var(--soft)}
+.shopgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.shopitem{background:#fffafc;border:3px solid var(--line);border-radius:20px;padding:8px;text-align:center}
+.shopitem .pr{font-weight:800;font-size:22px;color:var(--L)}
+.shopitem.own{background:#e6f8f1;border-color:#bfe8d8}
+.shopitem button{font-size:18px;font-weight:800;border:3px solid var(--L);border-radius:14px;padding:2px 16px;background:var(--mint);color:#fff;box-shadow:0 3px 0 var(--L)}
+.shopitem button:disabled{background:#e4dcea;border-color:#c9bcd4;box-shadow:0 3px 0 #c9bcd4}
+.cnt-badge{font-size:15px;color:#3f9c80;font-weight:700}
+.overlay{position:fixed;inset:0;background:rgba(110,90,126,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal{background:#fff;border:3px solid var(--L);border-radius:28px;padding:22px 26px;max-width:480px;width:100%;max-height:92vh;overflow:auto}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+.seg button{flex:1;font-size:18px;font-weight:700;border:3px solid var(--line);background:#fff;border-radius:12px;padding:6px;color:var(--ink)}
+.seg button.on{background:var(--pink);border-color:var(--L);color:#fff}
+.reset{background:none;border:none;color:var(--soft);font-size:15px;text-decoration:underline;margin-top:16px}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(200px);background:var(--L);color:#fff;font-size:22px;font-weight:700;padding:12px 24px;border-radius:20px;border:3px solid #fff;max-width:90vw;text-align:center;transition:transform .3s,visibility .3s;visibility:hidden;z-index:60;box-shadow:0 6px 0 rgba(110,90,126,.3)}
+#toast.show{transform:translateX(-50%);visibility:visible}
+#toast.good{background:#4fb89c}
+.confetti{position:fixed;top:-50px;z-index:30;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.fly{position:fixed;z-index:40;pointer-events:none;transition:transform .5s cubic-bezier(.3,-.4,.6,1),opacity .5s}
+
+html,body{overscroll-behavior:none}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+input{-webkit-user-select:text;user-select:text}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast"></div>
+<script>
+/* ===================== ART (chibi-kawaii) ===================== */
+const L='#6e5a7e';
+const SK=`stroke="${L}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"`;
+const S3=`stroke="${L}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;
+const SF=`fill="none" ${SK}`;
+function lum(h){h=h.replace('#','');const n=parseInt(h,16);return(.299*(n>>16)+.587*((n>>8)&255)+.114*(n&255))/255}
+function mix(a,b,t){const p=h=>{h=h.replace('#','');const n=parseInt(h,16);return[n>>16,(n>>8)&255,n&255]};const x=p(a),y=p(b);return'#'+x.map((v,i)=>Math.round(v+(y[i]-v)*t).toString(16).padStart(2,'0')).join('')}
+
+/* kawaii face. t: blij | knipoog | verliefd | tevreden | tong | oh */
+function face(cx,cy,s=1,t='blij',ink=L){
+ const ex=7*s,er=2.6*s,w=(1.7*s).toFixed(2);
+ const st=`stroke="${ink}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"`;
+ const dot=x=>`<ellipse cx="${x}" cy="${cy}" rx="${er}" ry="${er*1.25}" fill="${ink}"/><circle cx="${x+er*.4}" cy="${cy-er*.5}" r="${er*.42}" fill="${ink===L?'#fff':L}"/>`;
+ const arc=x=>`<path d="M${x-er*1.3} ${cy+er*.5} Q${x} ${cy-er*1.7} ${x+er*1.3} ${cy+er*.5}" fill="none" ${st}/>`;
+ const heart=x=>`<path d="M${x} ${cy+er*1.5} L${x-er*1.6} ${cy} Q${x-er*1.9} ${cy-er*1.7} ${x} ${cy-er*.7} Q${x+er*1.9} ${cy-er*1.7} ${x+er*1.6} ${cy}Z" fill="#ff5a7e"/>`;
+ const wink=x=>`<path d="M${x+er*1.1} ${cy-er} L${x-er*.9} ${cy} L${x+er*1.1} ${cy+er}" fill="none" ${st}/>`;
+ const my=cy+4*s;
+ const smile=`<path d="M${cx-3*s} ${my} Q${cx} ${my+3*s} ${cx+3*s} ${my}" fill="none" ${st}/>`;
+ const open=`<path d="M${cx-3.6*s} ${my-.4*s} Q${cx} ${my+5.5*s} ${cx+3.6*s} ${my-.4*s}Z" fill="#ff7aa5" ${st}/>`;
+ const cat=`<path d="M${cx-4*s} ${my} Q${cx-2*s} ${my+2.6*s} ${cx} ${my} Q${cx+2*s} ${my+2.6*s} ${cx+4*s} ${my}" fill="none" ${st}/>`;
+ const tongue=`<path d="M${cx-3.6*s} ${my-.4*s} Q${cx} ${my+2*s} ${cx+3.6*s} ${my-.4*s}" fill="none" ${st}/><path d="M${cx-1.8*s} ${my+.6*s} Q${cx-1.8*s} ${my+4.4*s} ${cx} ${my+4.4*s} Q${cx+1.8*s} ${my+4.4*s} ${cx+1.8*s} ${my+.6*s}Z" fill="#ff7aa5" ${st}/>`;
+ const oh=`<ellipse cx="${cx}" cy="${my+1.2*s}" rx="${1.6*s}" ry="${2*s}" fill="#ff7aa5" ${st}/>`;
+ const blush=`<ellipse cx="${cx-ex-4.5*s}" cy="${cy+3.6*s}" rx="${3.2*s}" ry="${1.9*s}" fill="#ffadc6"/><ellipse cx="${cx+ex+4.5*s}" cy="${cy+3.6*s}" rx="${3.2*s}" ry="${1.9*s}" fill="#ffadc6"/>`;
+ const E={blij:[dot,dot,smile],knipoog:[dot,wink,open],verliefd:[heart,heart,open],tevreden:[arc,arc,cat],tong:[arc,wink,tongue],oh:[dot,dot,oh]}[t]||[dot,dot,smile];
+ return blush+E[0](cx-ex)+E[1](cx+ex)+E[2];
+}
+const FACES=[['blij','Blij'],['knipoog','Knipoog'],['verliefd','Verliefd'],['tevreden','Tevreden'],['tong','Tong uit']];
+const FACE_SAY={blij:'Hij lacht naar me!',knipoog:'Hij knipoogt naar me!',verliefd:'Wat een verliefd gezichtje!',tevreden:'Hij kijkt zo tevreden!',tong:'Haha, hij steekt zijn tong uit!'};
+
+/* icons in a 100x100 box; f = draw a face */
+const ICON={
+ appel:f=>`<path d="M50 32 Q34 18 20 30 Q6 46 14 68 Q24 92 42 90 Q50 87 58 90 Q76 92 86 68 Q94 46 80 30 Q66 18 50 32Z" fill="#ff7a8a" ${SK}/><path d="M50 32 Q50 20 56 12" ${SF}/><path d="M56 20 Q68 8 80 16 Q70 28 56 20Z" fill="#8fd6a8" ${SK}/>${f?face(50,60,1.7):''}`,
+ peer:f=>`<path d="M50 16 Q40 16 40 32 Q40 42 32 52 Q16 68 26 82 Q36 94 50 92 Q64 94 74 82 Q84 68 68 52 Q60 42 60 32 Q60 16 50 16Z" fill="#cde88a" ${SK}/><path d="M50 16 L52 6" ${SF}/><path d="M53 10 Q64 2 72 10 Q62 18 53 10Z" fill="#8fd6a8" ${SK}/>${f?face(50,70,1.5):''}`,
+ ei:f=>`<ellipse cx="50" cy="54" rx="30" ry="38" fill="#fffaf0" ${SK}/>${f?face(50,60,1.7):''}`,
+ bloem:f=>`<path d="M24 36 Q18 88 28 92 L72 92 Q82 88 76 36Z" fill="#f6e3c4" ${SK}/><path d="M26 36 Q34 20 50 28 Q66 20 74 36 Q50 44 26 36Z" fill="#fffaf0" ${SK}/>${f?face(50,64,1.6):''}`,
+ suiker:f=>`<rect x="20" y="22" width="60" height="64" rx="14" fill="#ffffff" ${SK}/><path d="M24 38 L76 38" stroke="#ffd6e6" stroke-width="7" stroke-linecap="round"/><path d="M14 18 l3 6 l6 3 l-6 3 l-3 6 l-3 -6 l-6 -3 l6 -3Z" fill="#ffc6dc"/>${f?face(50,62,1.6):''}`,
+ boter:f=>`<ellipse cx="50" cy="78" rx="42" ry="11" fill="#e9f3ff" ${SK}/><path d="M22 74 L22 46 Q22 36 32 36 L68 36 Q78 36 78 46 L78 74Z" fill="#ffe27a" ${SK}/><path d="M28 44 L72 44" stroke="#fff6c4" stroke-width="6" stroke-linecap="round"/>${f?face(50,60,1.5):''}`,
+ kwark:f=>`<path d="M22 36 L30 88 Q50 94 70 88 L78 36Z" fill="#ffffff" ${SK}/><ellipse cx="50" cy="34" rx="30" ry="9" fill="#9fd0ff" ${SK}/>${f?face(50,62,1.6):''}`,
+ chocolade:f=>`<rect x="24" y="12" width="52" height="78" rx="8" fill="#8a5a44" ${SK}/><path d="M50 14 L50 52 M26 33 L74 33" fill="none" stroke="#6b4434" stroke-width="3"/><path d="M24 54 L76 54 L76 82 Q76 90 68 90 L32 90 Q24 90 24 82Z" fill="#ff9ec0" ${SK}/>${f?face(50,71,1.3):''}`,
+ aardbei:f=>`<path d="M50 90 Q20 70 18 46 Q18 28 34 28 L66 28 Q82 28 82 46 Q80 70 50 90Z" fill="#ff6f8f" ${SK}/><path d="M30 30 L38 14 L50 24 L62 14 L70 30 Q50 38 30 30Z" fill="#8fd6a8" ${SK}/><g fill="#fff3b0"><circle cx="30" cy="46" r="2.6"/><circle cx="70" cy="46" r="2.6"/><circle cx="40" cy="74" r="2.6"/><circle cx="60" cy="74" r="2.6"/></g>${f?face(50,54,1.5):''}`,
+ banaan:f=>`<path d="M16 32 Q20 84 72 86 Q90 84 90 72 Q58 70 44 54 Q30 38 30 20 Q18 18 16 32Z" fill="#ffe27a" ${SK}/><path d="M22 20 L26 10" ${SF}/>${f?face(42,62,1.25):''}`,
+ citroen:f=>`<path d="M8 52 Q12 44 22 44 Q32 22 50 22 Q68 22 78 44 Q88 44 92 52 Q88 60 78 60 Q68 82 50 82 Q32 82 22 60 Q12 60 8 52Z" fill="#fff07a" ${SK}/>${f?face(50,52,1.6):''}`,
+ wortel:f=>`<path d="M28 30 Q50 22 72 30 Q66 62 52 92 Q48 94 46 90 Q34 62 28 30Z" fill="#ffa552" ${SK}/><path d="M40 28 Q32 10 42 6 Q48 16 50 26 Q52 12 62 8 Q68 20 60 28" fill="#8fd6a8" ${SK}/>${f?face(50,46,1.3):''}`,
+ kers:f=>`<path d="M30 56 Q38 30 58 14 Q64 34 70 56" ${SF}/><path d="M58 14 Q72 6 82 14 Q72 24 58 14Z" fill="#8fd6a8" ${SK}/><circle cx="30" cy="70" r="19" fill="#ff5a6e" ${SK}/><circle cx="70" cy="70" r="19" fill="#ff5a6e" ${SK}/>${f?face(30,72,1)+face(70,72,1):''}`,
+ noten:f=>`<path d="M50 12 Q28 12 30 34 Q32 46 28 54 Q22 70 32 82 Q42 92 52 88 Q72 92 74 72 Q76 60 70 50 Q66 42 70 32 Q72 12 50 12Z" fill="#e3b277" ${SK}/>${f?face(50,58,1.5):''}`,
+ honing:f=>`<rect x="24" y="20" width="52" height="15" rx="5" fill="#b98a6e" ${SK}/><path d="M22 38 Q18 90 30 92 L70 92 Q82 90 78 38Z" fill="#ffc94d" ${SK}/><path d="M30 38 L30 50 Q30 56 35 56 Q40 56 40 50 L40 38" fill="#ffe27a" ${SK}/>${f?face(56,66,1.5):''}`,
+ slagroom:f=>`<path d="M18 72 Q50 94 82 72Z" fill="#9fd0ff" ${SK}/><path d="M22 72 Q12 58 26 52 Q20 36 36 34 Q36 20 50 12 Q64 20 64 34 Q80 36 74 52 Q88 58 78 72Z" fill="#ffffff" ${SK}/>${f?face(50,54,1.5):''}`,
+ kaarsje:f=>`<rect x="38" y="36" width="24" height="56" rx="6" fill="#ffc6dc" ${SK}/><path d="M40 52 L60 45 M40 68 L60 61 M40 84 L60 77" fill="none" stroke="#ffffff" stroke-width="4"/><path d="M50 6 Q63 21 50 32 Q37 21 50 6Z" fill="#ffd36b" ${SK}/>`,
+ spikkels:f=>`<rect x="30" y="10" width="40" height="13" rx="4" fill="#ff9ec0" ${SK}/><path d="M24 26 Q20 90 32 92 L68 92 Q80 90 76 26Z" fill="#eef7ff" ${SK}/><circle cx="36" cy="40" r="4" fill="#ff6f8f"/><circle cx="64" cy="38" r="4" fill="#7fd8bf"/><circle cx="48" cy="84" r="4" fill="#ffd36b"/><circle cx="34" cy="80" r="4" fill="#b49cff"/><circle cx="66" cy="82" r="4" fill="#ff9ec0"/><circle cx="50" cy="34" r="4" fill="#9fd0ff"/>${f?face(50,60,1.5):''}`,
+ tomaat:f=>`<ellipse cx="50" cy="58" rx="38" ry="31" fill="#ff5a4e" ${SK}/><path d="M32 30 L44 32 L50 20 L56 32 L68 30 L60 38 L50 35 L40 38Z" fill="#6cc28a" ${SK}/>${f?face(50,62,1.7):''}`,
+ kaas:f=>`<path d="M10 48 L90 30 L90 80 L10 80Z" fill="#ffd75e" ${SK}/><circle cx="76" cy="46" r="5" fill="#f0bd3c"/><circle cx="24" cy="70" r="4" fill="#f0bd3c"/>${f?face(52,62,1.5):''}`,
+ komkommer:f=>`<rect x="8" y="34" width="84" height="34" rx="17" fill="#8fd68f" ${SK}/><circle cx="22" cy="44" r="2.6" fill="#d4f2c4"/><circle cx="80" cy="58" r="2.6" fill="#d4f2c4"/>${f?face(50,50,1.4):''}`,
+ aardappel:f=>`<path d="M18 56 Q14 30 44 26 Q70 20 82 40 Q92 62 74 78 Q56 92 34 82 Q18 74 18 56Z" fill="#d9a86c" ${SK}/><circle cx="30" cy="46" r="2.6" fill="#b98a55"/><circle cx="76" cy="66" r="2.6" fill="#b98a55"/>${f?face(52,58,1.6):''}`,
+ d_bloem:f=>{let p='';for(let i=0;i<5;i++){const a=i*Math.PI*2/5-Math.PI/2;p+=`<circle cx="${(50+24*Math.cos(a)).toFixed(1)}" cy="${(52+24*Math.sin(a)).toFixed(1)}" r="17" fill="#ffadc6" ${SK}/>`}return p+`<circle cx="50" cy="52" r="17" fill="#ffe27a" ${SK}/>`+(f?face(50,52,1.1):'')},
+ d_ster:f=>`<path d="M50 8 L62 36 L92 38 L68 58 L76 88 L50 72 L24 88 L32 58 L8 38 L38 36Z" fill="#ffe27a" ${SK}/>${f?face(50,54,1.4):''}`,
+ d_hart:f=>`<path d="M50 88 L14 52 Q2 36 14 22 Q30 8 50 28 Q70 8 86 22 Q98 36 86 52Z" fill="#ff9ec0" ${SK}/>${f?face(50,48,1.5):''}`,
+ regenboog:f=>`<path d="M14 72 A36 36 0 0 1 86 72" fill="none" stroke="#ff9ec0" stroke-width="10"/><path d="M23 72 A27 27 0 0 1 77 72" fill="none" stroke="#ffe27a" stroke-width="9"/><path d="M32 72 A18 18 0 0 1 68 72" fill="none" stroke="#7fd8bf" stroke-width="9"/><ellipse cx="18" cy="74" rx="16" ry="11" fill="#ffffff" ${SK}/><ellipse cx="82" cy="74" rx="16" ry="11" fill="#ffffff" ${SK}/>${f?face(82,74,.9):''}`,
+ /* shop items */
+ plant:f=>`<ellipse cx="34" cy="34" rx="12" ry="22" fill="#8fd6a8" ${SK} transform="rotate(-30 34 34)"/><ellipse cx="66" cy="34" rx="12" ry="22" fill="#8fd6a8" ${SK} transform="rotate(30 66 34)"/><ellipse cx="50" cy="26" rx="11" ry="22" fill="#a8e6a0" ${SK}/><path d="M24 54 L76 54 L68 92 L32 92Z" fill="#ffa98a" ${SK}/>${f?face(50,72,1.4):''}`,
+ bloemen:f=>`<path d="M34 54 L40 30 M50 54 L50 22 M66 54 L60 30" ${SF}/><circle cx="38" cy="26" r="10" fill="#ff9ec0" ${SK}/><circle cx="50" cy="16" r="10" fill="#ffe27a" ${SK}/><circle cx="62" cy="26" r="10" fill="#c9b8ff" ${SK}/><path d="M30 52 L70 52 Q74 92 50 92 Q26 92 30 52Z" fill="#9fd0ff" ${SK}/>${f?face(50,72,1.3):''}`,
+ ballon:f=>`<path d="M36 60 Q40 78 46 96 M66 56 Q60 78 52 96" ${SF}/><ellipse cx="34" cy="38" rx="20" ry="24" fill="#ff9ec0" ${SK}/><ellipse cx="68" cy="34" rx="20" ry="24" fill="#c9b8ff" ${SK}/>${f?face(34,40,1.2)+face(68,36,1.2):''}`,
+ stoel:f=>`<rect x="28" y="12" width="44" height="44" rx="16" fill="#ffc6dc" ${SK}/><rect x="22" y="54" width="56" height="14" rx="7" fill="#ff9ec0" ${SK}/><path d="M30 68 L28 92 M70 68 L72 92" ${SF}/>${f?face(50,34,1.3):''}`,
+ lamp:f=>`<path d="M50 4 L50 24" ${SF}/><path d="M18 62 Q18 26 50 24 Q82 26 82 62Z" fill="#ffe27a" ${SK}/><circle cx="50" cy="70" r="10" fill="#fff6c4" ${SK}/>${f?face(50,48,1.3):''}`,
+ beer:f=>`<circle cx="24" cy="26" r="13" fill="#d9a679" ${SK}/><circle cx="76" cy="26" r="13" fill="#d9a679" ${SK}/><circle cx="50" cy="54" r="36" fill="#d9a679" ${SK}/><ellipse cx="50" cy="68" rx="14" ry="10" fill="#f2d6b8"/><path d="M46 64 L54 64 L50 68Z" fill="${L}"/>${f?face(50,54,1.5):''}`,
+ schilderij:f=>`<rect x="8" y="16" width="84" height="68" rx="6" fill="#ffd36b" ${SK}/><rect x="18" y="26" width="64" height="48" fill="#cfe8ff"/><path d="M18 74 Q40 46 58 62 Q68 54 82 66 L82 74Z" fill="#8fd6a8"/><circle cx="66" cy="38" r="7" fill="#ffe27a"/>`,
+ klok:f=>`<circle cx="50" cy="52" r="38" fill="#ffffff" ${SK}/><circle cx="50" cy="52" r="30" fill="#e9f6ff"/><path d="M50 52 L50 30 M50 52 L64 58" ${SF}/><path d="M24 14 L34 22 M76 14 L66 22" ${SF}/>${f?face(50,70,1):''}`,
+ poes:f=>`<path d="M78 84 Q96 70 88 52" ${SF}/><path d="M26 90 Q20 60 50 58 Q80 60 74 90Z" fill="#ffd9a8" ${SK}/><path d="M24 30 L28 6 L44 20Z M76 30 L72 6 L56 20Z" fill="#ffd9a8" ${SK}/><circle cx="50" cy="40" r="26" fill="#ffd9a8" ${SK}/>${f?face(50,42,1.3,'tevreden'):''}`,
+ muziek:f=>`<path d="M30 74 L30 22 L76 12 L76 64" ${SF}/><path d="M30 22 L76 12 L76 24 L30 34Z" fill="${L}"/><ellipse cx="22" cy="76" rx="11" ry="9" fill="#c9b8ff" ${SK}/><ellipse cx="68" cy="66" rx="11" ry="9" fill="#ff9ec0" ${SK}/>`,
+ beker:f=>`<path d="M22 20 Q10 20 12 34 Q14 46 30 48 M78 20 Q90 20 88 34 Q86 46 70 48" ${SF}/><path d="M24 14 L76 14 Q76 58 50 62 Q24 58 24 14Z" fill="#ffd36b" ${SK}/><path d="M44 62 L56 62 L58 78 L42 78Z" fill="#ffd36b" ${SK}/><rect x="30" y="78" width="40" height="12" rx="4" fill="#c9b8ff" ${SK}/>${f?face(50,34,1.3):''}`,
+ kroon:f=>`<path d="M12 80 L16 28 L34 48 L50 20 L66 48 L84 28 L88 80Z" fill="#ffd36b" ${SK}/><circle cx="16" cy="26" r="5" fill="#ff9ec0" ${SK}/><circle cx="50" cy="18" r="5" fill="#7fd8bf" ${SK}/><circle cx="84" cy="26" r="5" fill="#c9b8ff" ${SK}/>${f?face(50,62,1.4):''}`
+};
+const DI=k=>({bloem:'d_bloem',ster:'d_ster',hart:'d_hart'}[k]||k);
+const ico=(k,size,f=true)=>`<svg viewBox="0 0 100 100" width="${size}" height="${size}" aria-hidden="true">${ICON[k](f&&size>=26)}</svg>`;
+const icoAt=(k,x,y,sz,f=false)=>`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${(sz/100).toFixed(3)})">${ICON[k](f)}</g>`;
+function dims(o,vw,vh){if(o.nest)return`x="${o.x}" y="${o.y}" width="${o.w}" height="${o.h}"`;const w=o.w||vw;return`width="${w}" height="${Math.round(w*vh/vw)}"`}
+
+/* cake */
+function cakeSVG(r,o={}){
+ const raw=o.raw,col=raw?mix(r.color,'#ffffff',.55):r.color,ink=lum(col)<.42?'#fff6ec':L;
+ const tops=(o.deco&&o.deco.length?o.deco:(raw?[]:r.top)).map(DI);
+ let s=`<ellipse cx="80" cy="140" rx="72" ry="10" fill="#ffffff" ${S3}/><path d="M24 138 L24 80 Q24 68 36 68 L124 68 Q136 68 136 80 L136 138Z" fill="${col}" ${S3}/>`;
+ if(!raw)s+=`<path d="M20 76 Q20 58 38 58 L122 58 Q140 58 140 76 Q140 86 132 84 Q128 94 120 86 Q112 82 106 90 Q100 96 94 86 Q86 82 80 88 Q74 96 66 86 Q58 82 52 90 Q46 96 40 86 Q32 82 28 86 Q20 88 20 76Z" fill="${r.cream}" ${S3}/>`;
+ const n=tops.length,sz=n<=3?30:n<=5?24:n<=7?19:15,step=n>1?Math.min(sz*.95,112/(n-1)):0;
+ tops.forEach((k,i)=>{s+=icoAt(k,80-(n-1)*step/2+i*step-sz/2,60-sz,sz)});
+ if(o.face)s+=face(80,104,1.7,o.face,ink);
+ if(o.name!==undefined)s+=`<rect x="40" y="119" width="80" height="18" rx="9" fill="#ffffff" ${S3}/><text id="cname" x="80" y="133" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="14" fill="${L}">${esc(o.name)}</text>`;
+ return`<svg viewBox="0 0 160 152" ${dims(o,160,152)} class="cakesvg" aria-hidden="true">${s}</svg>`;
+}
+/* cupcakes */
+function cupSVG(r,o={}){
+ const n=o.count!==undefined?o.count:(o.sm?3:(typeof R!=='undefined'&&R&&R.recipe===r?R.cups:6));
+ const cols=Math.min(n,6),rows=Math.ceil(n/6),deco=o.deco||[],raw=o.raw;
+ const col=raw?mix(r.color,'#ffffff',.5):r.color,ink=lum(col)<.42?'#fff6ec':L;
+ let g='';
+ for(let i=0;i<n;i++){
+  const row=Math.floor(i/6),inRow=row===rows-1?n-row*6:6,ox=(i%6)*64+(cols-inRow)*32,oy=row*92;
+  g+=`<g transform="translate(${ox} ${oy})"><path d="M14 54 L50 54 L45 88 L19 88Z" fill="${col}" ${S3}/><path d="M25 57 L27 86 M32 57 L32 86 M39 57 L37 86" stroke="#ffffff" stroke-opacity=".55" stroke-width="2.5"/>`;
+  if(!raw){
+   g+=`<path d="M8 56 Q2 40 16 38 Q16 24 32 24 Q48 24 48 38 Q62 40 56 56Z" fill="${r.cream}" ${S3}/>`;
+   const d=deco.length?deco.filter((_,j)=>j%n===i).map(DI):[r.top];
+   const sz=d.length>1?17:24,stp=sz*.8;
+   d.forEach((k,j)=>{g+=icoAt(k,32-(d.length-1)*stp/2+j*stp-sz/2,(d.length>1?16:4)+(j%2)*-3,sz)});
+  }else g+=`<path d="M12 56 Q32 42 52 56Z" fill="${mix(r.color,'#ffffff',.7)}" ${S3}/>`;
+  if(o.face)g+=face(32,69,1.05,o.face,ink);
+  g+='</g>';
+ }
+ return`<svg viewBox="-2 0 ${cols*64+4} ${rows*92}" ${dims(o,cols*64+4,rows*92)} class="cakesvg" aria-hidden="true">${g}</svg>`;
+}
+
+/* chibi animals */
+const ANIMALS={
+ Kiki:{kind:'konijn',fur:'#ffffff',ear:'bunny',inner:'#ffc6dc',shirt:'#d8ccff',bow:'#ff9ec0'},
+ Bram:{kind:'beer',fur:'#d9a679',ear:'round',inner:'#f2cfa8',shirt:'#c8f0e3',muzzle:'#f2d6b8',nose:1,bow:'#7fd8bf'},
+ Mimi:{kind:'poes',fur:'#ffd9a8',ear:'cat',inner:'#ffc6dc',shirt:'#ffd6e6',whisk:1,bow:'#c9b8ff'},
+ Bas:{kind:'hond',fur:'#f0d2aa',ear:'floppy',earc:'#b98a5e',shirt:'#ffe79a',muzzle:'#fff3e2',nose:1,bow:'#ff9ec0'},
+ Fien:{kind:'vos',fur:'#ffa86b',ear:'cat',inner:'#fff3e2',shirt:'#c8f0e3',muzzle:'#fff3e2',nose:1,bow:'#ffe27a'},
+ Pim:{kind:'panda',fur:'#ffffff',ear:'round',earc:'#5d5170',inner:'#5d5170',shirt:'#ffc6dc',panda:1,nose:1,bow:'#7fd8bf'},
+ Kees:{kind:'kikker',fur:'#a8e6a0',ear:'frog',shirt:'#ffe79a',bow:'#ff9ec0'},
+ Luna:{kind:'eenhoorn',fur:'#ffffff',ear:'cat',inner:'#ffc6dc',shirt:'#d8ccff',horn:1,mane:1,bow:'#ffe27a'},
+ Roos:{kind:'varken',fur:'#ffc9d6',ear:'cat',inner:'#ff9ec0',shirt:'#c8f0e3',snout:1,bow:'#c9b8ff'},
+ Max:{kind:'aap',fur:'#b98a5e',ear:'side',inner:'#ffe3cf',shirt:'#ffd6e6',patch:'#ffe3cf',bow:'#7fd8bf'},
+ Leo:{kind:'leeuw',fur:'#ffd98a',ear:'round',inner:'#ffbf6b',shirt:'#d8ccff',lion:1,nose:1,bow:'#ff9ec0'},
+ Noor:{kind:'koala',fur:'#c9ccdb',ear:'koala',inner:'#f3f0f8',shirt:'#ffe79a',bignose:1,bow:'#ff9ec0'},
+ Tijn:{kind:'tijger',fur:'#ffb35c',ear:'round',inner:'#fff3e2',shirt:'#c8f0e3',stripes:1,muzzle:'#fff3e2',nose:1,bow:'#c9b8ff'},
+ Saar:{kind:'koe',fur:'#ffffff',ear:'side',inner:'#ffc6dc',shirt:'#ffd6e6',cow:1,snout:1,bow:'#ffe27a'}
+};
+function animalSVG(n,mood='',w=150){
+ const a=ANIMALS[n],sw=`stroke="${L}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"`;let o='';
+ o+=`<path d="M36 138 Q30 110 46 100 L74 100 Q90 110 84 138Z" fill="${a.shirt}" ${sw}/>`;
+ if(a.lion){let m='';for(let i=0;i<12;i++){const t=i*Math.PI/6;m+=`<circle cx="${(60+44*Math.cos(t)).toFixed(1)}" cy="${(62+44*Math.sin(t)).toFixed(1)}" r="13" fill="#f0a35a" ${sw}/>`}o+=m}
+ if(a.mane)o+=`<path d="M26 44 Q14 74 26 98 Q32 74 40 56Z" fill="#c9b8ff" ${sw}/><path d="M32 32 Q14 48 18 70 Q30 52 44 42Z" fill="#ffc6dc" ${sw}/>`;
+ const fur=a.fur,ec=a.earc||fur;
+ if(a.ear==='bunny')o+=`<ellipse cx="42" cy="18" rx="10" ry="28" fill="${fur}" ${sw} transform="rotate(-10 42 18)"/><ellipse cx="42" cy="20" rx="4.5" ry="19" fill="${a.inner}" transform="rotate(-10 42 20)"/><ellipse cx="78" cy="18" rx="10" ry="28" fill="${fur}" ${sw} transform="rotate(10 78 18)"/><ellipse cx="78" cy="20" rx="4.5" ry="19" fill="${a.inner}" transform="rotate(10 78 20)"/>`;
+ if(a.ear==='round')o+=`<circle cx="26" cy="30" r="15" fill="${ec}" ${sw}/><circle cx="94" cy="30" r="15" fill="${ec}" ${sw}/><circle cx="26" cy="30" r="7" fill="${a.inner}"/><circle cx="94" cy="30" r="7" fill="${a.inner}"/>`;
+ if(a.ear==='cat')o+=`<path d="M22 52 L24 8 L56 28Z" fill="${fur}" ${sw}/><path d="M98 52 L96 8 L64 28Z" fill="${fur}" ${sw}/><path d="M28 40 L29 18 L44 30Z" fill="${a.inner}"/><path d="M92 40 L91 18 L76 30Z" fill="${a.inner}"/>`;
+ if(a.ear==='frog')o+=`<circle cx="38" cy="30" r="17" fill="${fur}" ${sw}/><circle cx="82" cy="30" r="17" fill="${fur}" ${sw}/>`;
+ if(a.ear==='side')o+=`<ellipse cx="20" cy="62" rx="14" ry="11" fill="${fur}" ${sw}/><ellipse cx="100" cy="62" rx="14" ry="11" fill="${fur}" ${sw}/><ellipse cx="20" cy="62" rx="7" ry="5" fill="${a.inner}"/><ellipse cx="100" cy="62" rx="7" ry="5" fill="${a.inner}"/>`;
+ if(a.ear==='koala')o+=`<circle cx="20" cy="40" r="22" fill="${fur}" ${sw}/><circle cx="100" cy="40" r="22" fill="${fur}" ${sw}/><circle cx="20" cy="40" r="12" fill="${a.inner}"/><circle cx="100" cy="40" r="12" fill="${a.inner}"/>`;
+ if(a.horn)o+=`<path d="M53 26 L60 -6 L67 26Z" fill="#ffe27a" ${sw}/><path d="M56 14 L64 10 M55 20 L65 16" stroke="${L}" stroke-width="2"/>`;
+ if(a.cow)o+=`<path d="M36 30 Q30 14 40 10 Q42 20 46 26Z M84 30 Q90 14 80 10 Q78 20 74 26Z" fill="#ffe27a" ${sw}/>`;
+ o+=`<circle cx="60" cy="62" r="40" fill="${fur}" ${sw}/>`;
+ if(a.ear==='floppy')o+=`<ellipse cx="24" cy="62" rx="12" ry="24" fill="${ec}" ${sw} transform="rotate(18 24 62)"/><ellipse cx="96" cy="62" rx="12" ry="24" fill="${ec}" ${sw} transform="rotate(-18 96 62)"/>`;
+ if(a.mane)o+=`<path d="M40 30 Q52 18 66 24 Q56 30 50 40Z" fill="#ffc6dc" ${sw}/>`;
+ if(a.patch)o+=`<path d="M30 70 Q30 46 47 50 Q60 42 73 50 Q90 46 90 70 Q90 98 60 98 Q30 98 30 70Z" fill="${a.patch}"/>`;
+ if(a.muzzle)o+=`<ellipse cx="60" cy="84" rx="17" ry="11" fill="${a.muzzle}"/>`;
+ if(a.panda)o+=`<ellipse cx="43" cy="64" rx="12" ry="14" fill="#5d5170" transform="rotate(20 43 64)"/><ellipse cx="77" cy="64" rx="12" ry="14" fill="#5d5170" transform="rotate(-20 77 64)"/>`;
+ if(a.stripes)o+=`<path d="M60 24 L60 34 M47 27 L50 35 M73 27 L70 35 M22 58 L32 60 M98 58 L88 60" stroke="#c8692e" stroke-width="4" stroke-linecap="round"/>`;
+ if(a.cow)o+=`<ellipse cx="82" cy="44" rx="11" ry="8" fill="#6e5a7e" opacity=".75"/><ellipse cx="36" cy="40" rx="6" ry="5" fill="#6e5a7e" opacity=".75"/>`;
+ const eyeW=a.panda?'#ffffff':L;
+ if(mood==='happy')o+=`<path d="M35 66 Q43 55 51 66" fill="none" stroke="${eyeW}" stroke-width="4" stroke-linecap="round"/><path d="M69 66 Q77 55 85 66" fill="none" stroke="${eyeW}" stroke-width="4" stroke-linecap="round"/>`;
+ else o+=`<ellipse cx="43" cy="64" rx="7" ry="9" fill="${L}"/><ellipse cx="77" cy="64" rx="7" ry="9" fill="${L}"/><circle cx="46" cy="60" r="3" fill="#fff"/><circle cx="80" cy="60" r="3" fill="#fff"/><circle cx="40.5" cy="68.5" r="1.4" fill="#fff"/><circle cx="74.5" cy="68.5" r="1.4" fill="#fff"/>`;
+ o+=`<ellipse cx="30" cy="79" rx="7" ry="4" fill="#ffadc6"/><ellipse cx="90" cy="79" rx="7" ry="4" fill="#ffadc6"/>`;
+ let my=82;
+ if(a.snout){o+=`<ellipse cx="60" cy="80" rx="11" ry="7.5" fill="#ff9ec0" ${sw}/><circle cx="56" cy="80" r="1.8" fill="${L}"/><circle cx="64" cy="80" r="1.8" fill="${L}"/>`;my=91}
+ else if(a.bignose){o+=`<ellipse cx="60" cy="76" rx="7" ry="9" fill="#5d5170"/>`;my=88}
+ else if(a.nose){o+=`<path d="M56 76 L64 76 L60 80Z" fill="${L}" ${sw}/>`;my=84}
+ o+=mood==='happy'?`<path d="M53 ${my} Q60 ${my+10} 67 ${my}Z" fill="#ff7aa5" ${sw}/>`:`<path d="M54 ${my} Q57 ${my+3} 60 ${my} Q63 ${my+3} 66 ${my}" fill="none" ${sw}/>`;
+ if(a.whisk)o+=`<path d="M14 76 L28 78 M14 84 L28 82 M106 76 L92 78 M106 84 L92 82" stroke="${L}" stroke-width="2" stroke-linecap="round"/>`;
+ o+=`<path d="M47 98 L60 105 L47 112Z M73 98 L60 105 L73 112Z" fill="${a.bow}" ${sw}/><circle cx="60" cy="105" r="3.5" fill="#ffe27a" ${sw}/>`;
+ if(mood==='happy')o+=`<g transform="translate(96 4) scale(.2)">${ICON.d_hart(false)}</g><g transform="translate(6 14) scale(.16)">${ICON.d_hart(false)}</g>`;
+ return`<svg viewBox="0 -14 120 154" width="${w}" height="${Math.round(w*154/120)}" class="animal" aria-hidden="true">${o}</svg>`;
+}
+/* chibi baker */
+function bakerSVG(w=140,mood=''){
+ return`<svg viewBox="38 54 128 214" width="${w}" height="${Math.round(w*214/128)}" aria-hidden="true">
+ <g stroke="${L}" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round">
+ <path d="M72 214 Q62 252 74 264 L130 264 Q142 252 132 214Z" fill="#ffffff"/><path d="M88 218 L116 218 L120 264 L84 264Z" fill="#ffc6dc"/>
+ <circle cx="102" cy="164" r="52" fill="#ffe8d6"/>
+ <path d="M52 164 Q48 116 102 112 Q156 116 152 164 Q140 140 120 136 Q112 148 92 140 Q72 144 52 164Z" fill="#b98a6e"/>
+ <circle cx="52" cy="168" r="10" fill="#b98a6e"/><circle cx="152" cy="168" r="10" fill="#b98a6e"/>
+ <path d="M62 120 Q50 84 78 82 Q84 62 102 68 Q120 62 126 82 Q154 84 142 120Z" fill="#ffffff"/><line x1="64" y1="120" x2="140" y2="120"/></g>
+ <path d="M120 92 q3 -6 6 0 q3 -6 6 0 q0 5 -6 9 q-6 -4 -6 -9Z" fill="#ff9ec0"/>
+ ${mood==='happy'?`<path d="M74 172 Q84 160 94 172 M110 172 Q120 160 130 172" fill="none" stroke="${L}" stroke-width="4" stroke-linecap="round"/>`:`<ellipse cx="84" cy="170" rx="10" ry="13" fill="${L}"/><ellipse cx="120" cy="170" rx="10" ry="13" fill="${L}"/><circle cx="88" cy="164" r="4.5" fill="#fff"/><circle cx="124" cy="164" r="4.5" fill="#fff"/><circle cx="80" cy="176" r="2" fill="#fff"/><circle cx="116" cy="176" r="2" fill="#fff"/>`}
+ <ellipse cx="70" cy="190" rx="9" ry="5" fill="#ffadc6"/><ellipse cx="134" cy="190" rx="9" ry="5" fill="#ffadc6"/>
+ <path d="M96 190 Q102 198 108 190Z" fill="#ff7aa5" stroke="${L}" stroke-width="2.4" stroke-linejoin="round"/></svg>`;
+}
+/* oven */
+function ovenSVG(on,inner,t){
+ return`<svg viewBox="0 0 200 222" width="270" height="300" aria-hidden="true">
+ <rect x="30" y="200" width="22" height="16" rx="5" fill="#b9a7c8" ${S3}/><rect x="148" y="200" width="22" height="16" rx="5" fill="#b9a7c8" ${S3}/>
+ <rect x="12" y="18" width="176" height="190" rx="28" fill="#c8f0e3" ${SK}/>
+ <rect x="12" y="18" width="176" height="48" rx="24" fill="#ffffff" ${SK}/>
+ <circle cx="38" cy="42" r="9" fill="#ff9ec0" ${S3}/><circle cx="62" cy="42" r="9" fill="#c9b8ff" ${S3}/>
+ ${face(100,40,1.5,on?'blij':'tevreden')}
+ <rect x="124" y="28" width="52" height="26" rx="8" fill="#5d4a6e" ${S3}/><text x="150" y="47" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="16" fill="#ffb36b">${t}</text>
+ <rect x="60" y="70" width="80" height="8" rx="4" fill="#ffffff" ${S3}/>
+ <rect x="30" y="84" width="140" height="106" rx="20" fill="${on?'#ffb36b':'#7a6a8e'}" ${SK}/>
+ ${on?'<rect x="40" y="92" width="120" height="90" rx="14" fill="#ffe08a" opacity=".55"/>':''}
+ ${inner}</svg>`;
+}
+/* mixing bowl */
+function bowlSVG(f,keys,color,rot){
+ const n=keys.length,cols=Math.ceil(n/2);let c='';
+ keys.forEach((k,i)=>{const row=i%2,x=40+Math.floor(i/2)*(160/Math.max(cols,1))+(row?10:0),y=row?50:34;c+=icoAt(k,x-14,y-16,30)});
+ return`<svg viewBox="0 0 240 196" width="320" height="262" aria-hidden="true">
+ <ellipse cx="120" cy="72" rx="102" ry="24" fill="#eef7ff" ${SK}/>
+ <g opacity="${(1-f).toFixed(2)}">${c}</g>
+ <ellipse cx="120" cy="72" rx="94" ry="19" fill="${color}" opacity="${f.toFixed(2)}"/>
+ <g transform="rotate(${rot} 150 70)"><rect x="146" y="-6" width="11" height="80" rx="5" fill="#ffd6a8" ${S3}/><ellipse cx="151.5" cy="76" rx="15" ry="10" fill="#ffd6a8" ${S3}/></g>
+ <path d="M18 72 Q22 178 120 180 Q218 178 222 72 Q120 104 18 72Z" fill="#9fd0ff" ${SK}/>
+ ${face(120,134,2.8,f>=1?'verliefd':'blij')}</svg>`;
+}
+/* clock */
+function clockSVG(total){
+ let nums='';for(let i=1;i<=12;i++){const a=i*Math.PI/6;nums+=`<text x="${(100+70*Math.sin(a)).toFixed(1)}" y="${(100-70*Math.cos(a)+8).toFixed(1)}" text-anchor="middle" font-size="21" font-weight="800" font-family="'Baloo 2',sans-serif" fill="${L}">${i}</text>`}
+ const h=Math.floor(total/60)%12,m=total%60,ha=h*30+m/2,ma=m*6;
+ return`<svg viewBox="0 0 200 200" width="190" height="190" aria-hidden="true"><circle cx="100" cy="100" r="92" fill="#fffaf2" stroke="#ff9ec0" stroke-width="10"/><circle cx="100" cy="100" r="97" fill="none" stroke="${L}" stroke-width="3"/>${nums}
+ <line x1="100" y1="100" x2="100" y2="52" stroke="${L}" stroke-width="10" stroke-linecap="round" transform="rotate(${ha} 100 100)"/>
+ <line x1="100" y1="100" x2="100" y2="40" stroke="#7fd8bf" stroke-width="6" stroke-linecap="round" transform="rotate(${ma} 100 100)"/>
+ <circle cx="100" cy="100" r="8" fill="#ff9ec0" stroke="${L}" stroke-width="3"/></svg>`;
+}
+function billSVG(v){return`<svg viewBox="0 0 140 76" width="170" height="92" aria-hidden="true"><rect x="3" y="3" width="134" height="70" rx="12" fill="#c8f0e3" ${S3}/><rect x="11" y="11" width="118" height="54" rx="8" fill="none" stroke="#7fd8bf" stroke-width="2.5"/><text x="70" y="50" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="30" fill="${L}">€${v}</text></svg>`}
+const starI=(s=24,off)=>`<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="vertical-align:-4px${off?';opacity:.3;filter:grayscale(1)':''}" aria-hidden="true">${ICON.d_ster(false)}</svg>`;
+const coinI=(s=24)=>`<svg viewBox="0 0 100 100" width="${s}" height="${s}" style="vertical-align:-4px" aria-hidden="true"><circle cx="50" cy="50" r="40" fill="#ffd36b" ${SK}/><text x="50" y="66" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="46" fill="${L}">€</text></svg>`;
+const homeI=s=>`<svg viewBox="0 0 100 100" width="${s}" height="${s}" aria-hidden="true"><path d="M14 48 L50 16 L86 48" ${SF}/><path d="M24 44 L24 86 L76 86 L76 44" fill="#ffd6e6" ${SK}/><rect x="42" y="60" width="16" height="26" rx="6" fill="#c8f0e3" ${SK}/></svg>`;
+
+/* ===================== GAME ===================== */
+const KEY='taartenbakkerij-v1';
+const ING={
+ bloem:{s:'schep bloem',p:'scheppen bloem',l:'bloem'},
+ ei:{s:'ei',p:'eieren',l:'eieren'},
+ suiker:{s:'schep suiker',p:'scheppen suiker',l:'suiker'},
+ boter:{s:'blokje boter',p:'blokjes boter',l:'boter'},
+ kwark:{s:'bakje kwark',p:'bakjes kwark',l:'kwark'},
+ appel:{s:'appel',p:'appels',l:'appels'},
+ peer:{s:'peer',p:'peren',l:'peren'},
+ chocolade:{s:'reep chocolade',p:'repen chocolade',l:'chocolade'},
+ aardbei:{s:'aardbei',p:'aardbeien',l:'aardbeien'},
+ banaan:{s:'banaan',p:'bananen',l:'bananen'},
+ citroen:{s:'citroen',p:'citroenen',l:'citroenen'},
+ wortel:{s:'wortel',p:'wortels',l:'wortels'},
+ kers:{s:'kers',p:'kersen',l:'kersen'},
+ noten:{s:'handje noten',p:'handjes noten',l:'noten'},
+ honing:{s:'pot honing',p:'potten honing',l:'honing'},
+ slagroom:{s:'bakje slagroom',p:'bakjes slagroom',l:'slagroom'},
+ kaarsje:{s:'kaarsje',p:'kaarsjes',l:'kaarsjes'},
+ spikkels:{s:'zakje spikkels',p:'zakjes spikkels',l:'spikkels'},
+ tomaat:{s:'tomaat',p:'tomaten',l:'tomaat'},
+ kaas:{s:'kaas',p:'kazen',l:'kaas'},
+ komkommer:{s:'komkommer',p:'komkommers',l:'komkommer'},
+ aardappel:{s:'aardappel',p:'aardappels',l:'aardappel'}
+};
+const RECIPES=[
+ {id:'appel',name:'appeltaart',need:0,min:45,price:8,color:'#f2b872',cream:'#fbe7bf',top:['appel','appel','appel'],ing:{bloem:2,boter:1,suiker:1,appel:3,ei:1}},
+ {id:'choco',name:'chocoladetaart',need:0,min:30,price:9,color:'#8a5a44',cream:'#c99377',top:['chocolade','chocolade'],ing:{bloem:2,ei:2,suiker:1,boter:1,chocolade:2}},
+ {id:'aardbei',name:'aardbeientaart',need:3,min:30,price:7,color:'#ffc4d3',cream:'#ffffff',top:['aardbei','aardbei','aardbei'],ing:{bloem:1,ei:2,suiker:1,aardbei:4,slagroom:1}},
+ {id:'banaan',name:'bananentaart',need:6,min:45,price:6,color:'#f6dd8c',cream:'#fff6d6',top:['banaan','banaan'],ing:{bloem:2,ei:1,banaan:3,honing:1}},
+ {id:'citroen',name:'citroentaart',need:10,min:30,price:8,color:'#fbe878',cream:'#fffbe0',top:['citroen','citroen','citroen'],ing:{bloem:1,boter:1,ei:3,suiker:2,citroen:2}},
+ {id:'peer',name:'perentaart',need:14,min:45,price:9,color:'#dccd86',cream:'#f6f0d0',top:['peer','noten','peer'],ing:{bloem:2,boter:1,suiker:1,peer:3,noten:1}},
+ {id:'kwark',name:'kwarktaart',need:18,min:60,price:12,color:'#fbf0d3',cream:'#ffffff',top:['citroen','aardbei','citroen'],ing:{kwark:2,ei:2,suiker:1,bloem:1,citroen:1}},
+ {id:'wortel',name:'worteltaart',need:23,min:45,price:11,color:'#f2a062',cream:'#fff4e8',top:['wortel','wortel','wortel'],ing:{bloem:2,ei:2,wortel:3,noten:1,suiker:1}},
+ {id:'kers',name:'kersentaart',need:28,min:30,price:13,color:'#f08a95',cream:'#ffe3e7',top:['kers','kers','kers'],ing:{bloem:2,boter:1,ei:1,kers:6}},
+ {id:'jarig',name:'verjaardagstaart',need:35,min:30,price:15,color:'#ffbcd6',cream:'#bfe0ff',top:['kaarsje','kaarsje','aardbei','kaarsje','kaarsje'],ing:{bloem:2,ei:3,suiker:2,slagroom:1,aardbei:2,kaarsje:6}},
+ {id:'cvanille',kind:'cup',name:'vanillecupcake',need:2,min:15,price:2,color:'#ffcf99',cream:'#fff8e7',top:'kers',ing:{bloem:1,ei:1,suiker:2,boter:1,slagroom:1}},
+ {id:'cchoco',kind:'cup',name:'chocoladecupcake',need:5,min:15,price:2,color:'#a8735a',cream:'#7a4d38',top:'chocolade',ing:{bloem:1,ei:1,suiker:1,boter:1,chocolade:2}},
+ {id:'caardbei',kind:'cup',name:'aardbeiencupcake',need:8,min:30,price:3,color:'#ff9eb5',cream:'#ffd1dc',top:'aardbei',ing:{bloem:1,ei:1,suiker:1,aardbei:3,slagroom:1}},
+ {id:'ccitroen',kind:'cup',name:'citroencupcake',need:12,min:15,price:2,color:'#ffe066',cream:'#fffbe0',top:'citroen',ing:{bloem:1,ei:2,suiker:1,boter:1,citroen:1}},
+ {id:'cregen',kind:'cup',name:'regenboogcupcake',need:20,min:30,price:3,color:'#a0c4ff',cream:'#ffc6ff',top:'regenboog',ing:{bloem:1,ei:1,suiker:2,boter:1,spikkels:2}}
+].sort((a,b)=>a.need-b.need);
+const isCup=r=>!!r&&r.kind==='cup';
+const DECO={kaarsje:['kaarsje','kaarsjes'],kers:['kers','kersen'],bloem:['bloemetje','bloemetjes'],ster:['sterretje','sterretjes'],hart:['hartje','hartjes'],aardbei:['aardbei','aardbeien']};
+const SHOP=[['plant','plant',5],['bloemen','bos bloemen',6],['ballon','ballonnen',7],['stoel','stoel',8],['lamp','lamp',10],['beer','knuffelbeer',12],['schilderij','schilderij',14],['klok','klok',15],['poes','poes',18],['muziek','muziek',20],['regenboog','regenboog',25],['beker','beker',30],['kroon','kroon',40]];
+const CUST=Object.keys(ANIMALS).map(n=>({n}));
+const STEPS=['Bestelling','Recept','Zoeken','Mixen','Oven','Versieren','Gezichtje','Naam','Betalen'];
+const LEVELS={makkelijk:'Makkelijk',normaal:'Normaal',uitdaging:'Uitdaging'};
+
+const DEF={stars:0,baked:0,bakery:'',coins:0,items:[],counts:{},set:{sound:true,voice:false,level:'normaal'}};
+let S=load(),R=null,cur='',resetArmed=false;
+function load(){let s={};try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
+ const o=Object.assign({},DEF,s);o.set=Object.assign({},DEF.set,s.set||{});o.items=Array.isArray(o.items)?o.items:[];o.counts=o.counts||{};
+ if(typeof o.stars!=='number')o.stars=0;if(typeof o.coins!=='number')o.coins=0;return o}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const $=id=>document.getElementById(id);
+const rnd=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rnd(a.length)];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const amt=(k,n)=>`${n} ${n===1?ING[k].s:ING[k].p}`;
+const lvl=()=>S.set.level;
+const NUM=['nul','een','twee','drie','vier','vijf','zes','zeven','acht','negen','tien','elf','twaalf'];
+const cakeName=(r,q,n)=>isCup(r)?(n===1?`een ${r.name}`:`${NUM[n]} ${r.name}s`):q===2?`twee ${r.name}en`:`een ${r.name}`;
+const count=()=>isCup(R.recipe)?R.cups:R.qty;
+const wishText=w=>`met ${NUM[w.n]} ${w.n===1?DECO[w.k][0]:DECO[w.k][1]} erop`;
+
+/* ---------- sound, speech, effects ---------- */
+let AC=null;
+function tone(f,d,type='sine',v=.15,delay=0){if(!S.set.sound)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+delay;o.type=type;o.frequency.value=f;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+const sfx={
+ pop:()=>tone(700,.12,'triangle',.18),
+ no:()=>tone(200,.22,'square',.05),
+ ok:()=>{tone(523,.14);tone(784,.25,'sine',.15,.1)},
+ ding:()=>{tone(1319,.9,'sine',.2);tone(1976,.6,'sine',.08,.02)},
+ coin:()=>{tone(988,.1,'square',.06);tone(1319,.3,'square',.06,.08)},
+ win:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.3,'triangle',.15,i*.12))
+};
+function say(t){try{const sy=window.speechSynthesis;if(!sy)return;sy.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='nl-NL';const v=sy.getVoices().find(v=>/^nl/i.test(v.lang));if(v)u.voice=v;u.rate=.92;sy.speak(u)}catch(e){}}
+const spk=t=>`<button class="speak" onclick='say(${esc(JSON.stringify(t))})' title="Voorlezen" aria-label="Voorlezen"><svg viewBox="0 0 100 100" width="22" height="22"><path d="M14 38 L34 38 L56 18 L56 82 L34 62 L14 62Z" fill="#c9b8ff" ${SK}/><path d="M68 34 Q80 50 68 66 M78 24 Q98 50 78 76" ${SF}/></svg></button>`;
+function autoSay(t){if(S.set.voice)setTimeout(()=>say(t),400)}
+let toastT;
+function toast(msg,good){const t=$('toast');t.textContent=msg;t.className='show'+(good?' good':'');clearTimeout(toastT);toastT=setTimeout(()=>t.className='',3400)}
+function shake(el){if(!el)return;el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
+function confetti(){const em=['d_hart','d_ster','d_bloem'];for(let i=0;i<34;i++){const s=document.createElement('span');s.className='confetti';s.innerHTML=ico(pick(em),22+rnd(14),false);s.style.left=Math.random()*100+'vw';s.style.animationDuration=(2+Math.random()*2)+'s';s.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),5000)}}
+function fly(a,toSel,k){try{const tg=document.querySelector(toSel);if(!tg||!a)return;const b=tg.getBoundingClientRect();const s=document.createElement('div');s.className='fly';s.innerHTML=ico(k,46,false);
+ s.style.left=(a.left+a.width/2-23)+'px';s.style.top=(a.top+a.height/2-23)+'px';document.body.appendChild(s);
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{s.style.transform=`translate(${b.left+b.width/2-a.left-a.width/2}px,${b.top+b.height/2-a.top-a.height/2}px) scale(.7)`;s.style.opacity='.2'}));
+ setTimeout(()=>s.remove(),600)}catch(e){}}
+
+/* ---------- product rendering ---------- */
+function cakes(r,o={}){
+ if(isCup(r))return cupSVG(r,Object.assign({w:o.sm?110:300},o));
+ const one=cakeSVG(r,Object.assign({w:o.sm?110:220},o));
+ return R&&R.recipe===r&&R.qty===2&&!o.single?`<div class="pair">${one}${cakeSVG(r,Object.assign({w:o.sm?110:220},o,{name:undefined}))}</div>`:one;
+}
+const thumb=(r,w=110)=>isCup(r)?cupSVG(r,{count:3,w,face:'blij'}):cakeSVG(r,{w,face:'blij'});
+
+/* ---------- frame ---------- */
+function frame(step,html){
+ const steps=step===null?'':`<div class="steps">${STEPS.map((s,i)=>`<span class="${i===step?'on':i<step?'done':''}">${i<step?'✓ ':''}${s}</span>`).join('')}</div>`;
+ $('app').innerHTML=`<header><button class="home" onclick="showHome()" title="Naar huis" aria-label="Naar huis">${homeI(30)}</button><div class="title">${S.bakery?'Bakkerij '+esc(S.bakery):'Taartenbakkerij'}</div><div class="chip">${starI(24)} ${S.stars}</div><div class="chip coins">${coinI(24)} €${S.coins}</div><button class="gear" onclick="openParent()" title="Voor ouders">Ouders</button></header><main>${steps}${html}</main>`;
+ window.scrollTo(0,0);
+}
+const unlocked=()=>RECIPES.filter(r=>r.need<=S.stars);
+
+/* ---------- home ---------- */
+function homeScene(){
+ const ul=unlocked().slice(-3),nm=esc(S.bakery),fs=S.bakery.length>11?15:20;
+ let win='';ul.forEach((r,i)=>{win+=isCup(r)?cupSVG(r,{count:1,face:'blij',nest:1,x:66+i*44,y:178,w:40,h:56}):cakeSVG(r,{face:'blij',nest:1,x:62+i*44,y:184,w:48,h:46})});
+ const has=k=>S.items.includes(k);
+ let sc='';for(let i=0;i<8;i++){sc+=`<path d="M${36+i*34} 112 a17 17 0 0 0 34 0Z" fill="${i%2?'#ffffff':'#ff9ec0'}" ${S3}/>`}
+ return`<svg viewBox="0 0 380 330" width="100%" class="scene" aria-hidden="true">
+ <rect x="0" y="0" width="380" height="330" rx="26" fill="#e3f1ff"/>
+ ${has('regenboog')?icoAt('regenboog',150,-6,90,true):''}
+ <circle cx="44" cy="44" r="24" fill="#ffe79a" ${S3}/>${face(44,44,1.6,'blij')}
+ <path d="M300 60 Q296 44 312 44 Q318 32 334 38 Q350 34 352 50 Q366 52 364 64Z" fill="#ffffff" ${S3}/>${face(330,54,1,'tevreden')}
+ <rect x="0" y="292" width="380" height="38" fill="#c8f0e3"/><path d="M0 292 L380 292" stroke="${L}" stroke-width="3"/>
+ <rect x="40" y="100" width="262" height="194" rx="10" fill="#ffe0ec" ${SK}/>
+ <rect x="74" y="50" width="194" height="44" rx="18" fill="#ffffff" ${SK}/>
+ <text x="171" y="${fs===20?79:77}" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="${fs}" fill="${L}">Bakkerij ${nm}</text>
+ ${has('kroon')?icoAt('kroon',151,14,40,true):''}
+ <rect x="34" y="98" width="274" height="16" rx="6" fill="#ff9ec0" ${S3}/>${sc}
+ <rect x="56" y="150" width="148" height="104" rx="16" fill="#f4faff" ${SK}/>
+ <path d="M60 236 L200 236" stroke="${L}" stroke-width="3"/>${win}
+ ${has('bloemen')?icoAt('bloemen',66,240,34,false)+icoAt('bloemen',156,240,34,false):''}
+ ${has('lamp')?icoAt('lamp',112,112,36,true):''}
+ <path d="M220 294 L220 178 Q220 148 250 148 Q280 148 280 178 L280 294Z" fill="#c8f0e3" ${SK}/><circle cx="250" cy="182" r="14" fill="#f4faff" ${S3}/><circle cx="268" cy="236" r="4" fill="#ffd36b" ${S3}/>
+ ${has('plant')?icoAt('plant',4,236,58,true):''}${has('beer')?icoAt('beer',180,256,40,true):''}${has('poes')?icoAt('poes',330,256,42,true):''}
+ ${has('ballon')?icoAt('ballon',2,96,64,true):''}${has('muziek')?icoAt('muziek',234,104,30,false):''}
+ <svg x="286" y="128" width="96" height="164" viewBox="38 54 128 214">${bakerSVG(96).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg>
+ </svg>`;
+}
+function showHome(){
+ cur='home';resetArmed=false;
+ if(!S.bakery){
+  frame(null,`<div class="panel center">${bakerSVG(150)}<h2>Welkom, bakker!</h2><p class="q">Hoe heet jouw bakkerij? ${spk('Welkom, bakker! Hoe heet jouw bakkerij?')}</p>
+  <input class="txt" id="bk" maxlength="16" placeholder="Typ een naam" onkeydown="if(event.key==='Enter')setBakery()"><br>
+  <button class="big" onclick="setBakery()">Open mijn bakkerij!</button></div>`);
+  setTimeout(()=>$('bk')&&$('bk').focus(),50);return;
+ }
+ const next=RECIPES.find(r=>r.need>S.stars);
+ const prevNeed=[...RECIPES].reverse().find(r=>r.need<=S.stars).need;
+ const prog=next?Math.round((S.stars-prevNeed)/(next.need-prevNeed)*100):100;
+ const owned=SHOP.filter(i=>S.items.includes(i[0]));
+ frame(null,`<div class="panel center scenep">${homeScene()}
+  <p class="q">${starI(26)} ${S.stars} sterren &nbsp; ${coinI(26)} €${S.coins} &nbsp; ${S.baked} bestellingen</p>
+  ${next?`<p>Nog <b>${next.need-S.stars}</b> ${starI(20)} tot de <b>${next.name}</b></p><div class="progress"><div style="width:${prog}%"></div></div>`:`<p><b>Je kunt alles bakken! Wat een topbakker!</b></p>`}
+  <div class="btnrow"><button class="big" onclick="newRound()">Open de winkel!</button><button class="big lila" onclick="showBook(false)">Recepten</button><button class="big mint" onclick="showShop()">Inrichten</button></div>
+  ${owned.length?`<div class="decor">${owned.map(i=>`<span title="${i[1]}">${ico(i[0],46)}</span>`).join('')}</div>`:''}
+  <p class="lvl">Niveau: ${LEVELS[lvl()]}</p></div>`);
+}
+function setBakery(){const v=$('bk').value.trim();if(!v){shake($('bk'));toast('Typ eerst een naam voor je bakkerij.');return}S.bakery=cap(v);save();sfx.ok();showHome()}
+
+/* ---------- shop ---------- */
+function showShop(){
+ cur='shop';
+ const items=SHOP.map(([id,n,p])=>{const own=S.items.includes(id);
+  return `<div class="shopitem ${own?'own':''}" id="shop-${id}">${ico(id,72)}<div>${n}</div><div class="pr">€${p}</div>${own?'<div class="cnt-badge">✓ in je bakkerij</div>':`<button onclick="buy('${id}')" ${S.coins<p?'disabled':''}>Kopen</button>`}</div>`}).join('');
+ frame(null,`<div class="panel center"><h2>Bakkerij inrichten</h2><p class="q">In je spaarpot zit ${coinI(26)} <b>€${S.coins}</b>. ${spk('In je spaarpot zit '+S.coins+' euro. Wat wil je kopen?')}</p><p class="small">Verdien geld door taarten te verkopen. Koop daarmee mooie spullen voor je bakkerij.</p></div>
+ <div class="panel"><div class="shopgrid">${items}</div></div><div class="btnrow"><button class="big" onclick="showHome()">Terug</button></div>`);
+}
+function buy(id){const it=SHOP.find(i=>i[0]===id);if(!it||S.coins<it[2]||S.items.includes(id))return;
+ const before=S.coins;S.coins-=it[2];S.items.push(id);save();sfx.coin();showShop();
+ toast(`Je had €${before}. De ${it[1]} kost €${it[2]}. Nu heb je nog €${S.coins}.`,true);}
+
+/* ---------- parent menu ---------- */
+let gate=null;
+function openParent(){
+ const a=6+rnd(4),b=6+rnd(4);gate=a*b;
+ const ov=document.createElement('div');ov.className='overlay';ov.id='ov';ov.onclick=e=>{if(e.target===ov)closeParent()};
+ ov.innerHTML=`<div class="modal center"><h2>Voor ouders</h2><p class="q">Hoeveel is ${a} × ${b}?</p>
+  <input class="txt" id="gateIn" inputmode="numeric" maxlength="3" onkeydown="if(event.key==='Enter')checkGate()"><br>
+  <button class="big" onclick="checkGate()">Verder</button><button class="big lila" onclick="closeParent()">Sluiten</button></div>`;
+ document.body.appendChild(ov);setTimeout(()=>$('gateIn')&&$('gateIn').focus(),50);
+}
+function closeParent(){const o=$('ov');if(o)o.remove();resetArmed=false}
+function checkGate(){if(Number($('gateIn').value)!==gate){shake($('gateIn'));$('gateIn').value='';return}parentMenu()}
+function parentMenu(){
+ const o=$('ov');if(!o)return;const st=S.set;
+ const seg=(key,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="${st[key]===v?'on':''}" onclick="setOpt('${key}',${JSON.stringify(v).replace(/"/g,"'")})">${l}</button>`).join('')}</div>`;
+ o.querySelector('.modal').innerHTML=`<h2>Instellingen</h2>
+  <b>Niveau</b>${seg('level',[['makkelijk','Makkelijk'],['normaal','Normaal'],['uitdaging','Uitdaging']])}
+  <p class="lvl">Makkelijk: alleen goede ingrediënten in de kast, 2 keuzes bij de klok, kleine wensen, totaalbedrag als hulp.<br>Normaal: verkeerde ingrediënten ertussen, 3 keuzes, wisselgeld van €10 of €20.<br>Uitdaging: soms 2 taarten of 12 cupcakes (alles dubbel), starttijd op een half uur, ook briefjes van €50.</p>
+  <b>Geluid</b>${seg('sound',[[true,'Aan'],[false,'Uit']])}
+  <b>Automatisch voorlezen</b>${seg('voice',[[true,'Aan'],[false,'Uit']])}
+  <p class="small">Gespeeld: ${S.baked} bestellingen · ${S.stars} sterren · €${S.coins} in de spaarpot</p>
+  <div class="center"><button class="big" onclick="closeParent();if(cur==='home')showHome()">Klaar</button><br>
+  <button class="reset" id="rs" onclick="resetGame()">Alle voortgang wissen</button></div>`;
+}
+function setOpt(k,v){S.set[k]=v;save();parentMenu()}
+function resetGame(){if(!resetArmed){resetArmed=true;$('rs').textContent='Zeker weten? Klik nog een keer: sterren, geld en spullen worden gewist.';return}
+ S=Object.assign({},DEF,{set:S.set,items:[],counts:{}});save();closeParent();R=null;showHome()}
+
+/* ---------- round ---------- */
+function newRound(){
+ const L_=lvl(),ul=unlocked();
+ let r=pick(ul);if(R&&ul.length>1)while(r===R.recipe)r=pick(ul);
+ let c=pick(CUST);if(R)while(c.n===R.cust.n)c=pick(CUST);
+ const cupOpts={makkelijk:[2,3,4],normaal:[2,3,4,5,6],uitdaging:[4,5,6,8,10,12]}[L_];
+ const cups=isCup(r)?pick(cupOpts):0;
+ const qty=isCup(r)?(cups>6?2:1):(L_==='uitdaging'&&S.baked>=2&&Math.random()<.35?2:1);
+ const wishP={makkelijk:.3,normaal:.5,uitdaging:.6}[L_],wishMax={makkelijk:3,normaal:5,uitdaging:8}[L_];
+ const wish=S.baked>=2&&Math.random()<wishP?{k:pick(Object.keys(DECO)),n:1+rnd(wishMax)}:null;
+ let T=cakeName(r,qty,cups);if(wish)T+=' '+wishText(wish);
+ const phrase=pick([`Mag ik ${T}?`,`Ik wil graag ${T}.`,`Ik ben jarig! Mag ik ${T}?`,`${cap(T)}, alsjeblieft!`,`Heb je ${T} voor mij?`]);
+ const total=r.price*(isCup(r)?cups:qty);
+ const notes=L_==='makkelijk'?[total<10?10:20]:L_==='normaal'?[10,20].filter(x=>x>total):[10,20,50].filter(x=>x>total);
+ const start=(1+rnd(10))*60+(L_==='uitdaging'&&Math.random()<.5?30:0);
+ let shelf=Object.keys(ING);if(L_==='makkelijk')shelf=shelf.filter(k=>r.ing[k]);
+ R={recipe:r,cust:c,qty,cups,wish,phrase,total,paid:pick(notes),start,errA:false,errB:false,errW:false,wishTried:false,bowl:{},stirs:0,oven:0,ans:'',written:'',deco:[],face:null,shelf:shuffle(shelf)};
+ showOrder();
+}
+function showOrder(){
+ cur='order';const c=R.cust;const text=`Hallo! Ik ben ${c.n}. ${R.phrase}`;
+ frame(0,`<div class="panel center"><div class="walkin">${animalSVG(c.n,'',170)}</div>
+  <div class="bubble">${esc(text)}${spk(text)}</div><br>
+  <button class="big" onclick="showBook(true)">Zoek het recept</button></div>`);
+ sfx.pop();autoSay(text);
+}
+function showBook(inRound){
+ cur='book';
+ const head=inRound?`<div class="panel center orderhead">${animalSVG(R.cust.n,'',76)}<span class="q"><b>${R.cust.n}:</b> "${esc(R.phrase)}"</span>${spk(R.phrase)}<p class="small" style="width:100%">Wat moet je bakken? Klik op het goede recept.</p></div>`
+  :`<div class="panel center"><h2>Receptenboek</h2><p class="small">Verdien sterren om nieuwe recepten vrij te spelen.</p></div>`;
+ const card=r=>{
+  const open=r.need<=S.stars,cnt=S.counts[r.id]||0;
+  const inner=`${thumb(r,isCup(r)?130:110)}<div>${cap(r.name).replace('cupcake','&shy;cupcake')}</div>${open?(cnt&&!inRound?`<div class="cnt-badge">${cnt} gebakken</div>`:''):`<div class="need">slotje: ${r.need} ${starI(16)} nodig</div>`}${!inRound&&open?`<ul>${Object.entries(r.ing).map(([k,n])=>`<li>${ico(k,22,false)} ${amt(k,n)}</li>`).join('')}<li>${r.min} minuten in de oven</li><li>€${r.price}${isCup(r)?' per stuk':''}</li></ul>`:''}`;
+  return inRound&&open?`<button class="card" id="card-${r.id}" onclick="chooseRecipe('${r.id}')">${inner}</button>`:`<div class="card ${open?'':'locked'}">${inner}</div>`;
+ };
+ const cardsHTML=`<div class="panel"><h3>Taarten</h3><div class="cards">${RECIPES.filter(r=>!isCup(r)).map(card).join('')}</div></div><div class="panel"><h3>Cupcakes <span class="small">(1 bakplaat = 6 cupcakes)</span></h3><div class="cards">${RECIPES.filter(isCup).map(card).join('')}</div></div>`;
+ frame(inRound?1:null,`${head}${cardsHTML}`+(inRound?'':`<div class="btnrow" style="margin-top:16px"><button class="big" onclick="showHome()">Terug</button></div>`));
+}
+function chooseRecipe(id){
+ if(id===R.recipe.id){sfx.ok();showPantry();return}
+ R.errA=true;sfx.no();shake($('card-'+id));
+ toast(`Dat is de ${RECIPES.find(r=>r.id===id).name}. Lees nog eens wat ${R.cust.n} vraagt!`);
+}
+
+/* ---------- pantry ---------- */
+const target=k=>(R.recipe.ing[k]||0)*R.qty;
+function pantryDone(){const r=R.recipe;return Object.keys(r.ing).every(k=>R.bowl[k]===target(k))&&Object.keys(R.bowl).every(k=>r.ing[k])}
+function showPantry(){
+ cur='pantry';const r=R.recipe,two=R.qty===2;
+ const list=Object.entries(r.ing).map(([k,n])=>{const h=R.bowl[k]||0,t=target(k);return `<li class="${h===t?'done':h>t?'over':''}">${ico(k,38)}<span>${amt(k,n)}</span><span class="cnt">${h}/${two&&h!==t?'?':t}</span></li>`}).join('');
+ const bowl=Object.entries(R.bowl).map(([k,n])=>Array(n).fill(`<button onclick="remIng('${k}')" title="Eruit halen">${ico(k,40,false)}</button>`).join('')).join('');
+ frame(2,`<div class="grid2b">
+  <div class="panel"><h3 class="withimg">${thumb(r,56)} ${cap(r.name)}</h3>${two?`<div class="hint">${isCup(r)?`Je bakt <b>${R.cups} cupcakes</b>: dat zijn 2 bakplaten!`:'Je bakt <b>2 taarten</b>!'} Neem van alles het dubbele.</div>`:''}<p class="small">${isCup(r)?'Recept voor 1 bakplaat (6 cupcakes):':two?'Recept voor 1 taart:':'Dit heb je nodig:'}</p><ul class="rlist">${list}</ul></div>
+  <div class="panel center"><h3>De kom</h3><div class="bowl" id="bowl">${bowl||'<span class="small" style="align-self:center">Nog leeg...</span>'}</div>
+   <p class="small">Te veel erin? Klik in de kom om het eruit te halen.</p>
+   <button class="big" ${pantryDone()?'':'disabled'} onclick="showMix()">Klaar! Gaan mixen</button></div></div>
+  <div class="panel"><h3>De voorraadkast</h3><p class="small">Zoek de goede ingrediënten en klik erop.</p>
+  <div class="shelf">${R.shelf.map(k=>`<button class="ing" id="ing-${k}" onclick="addIng('${k}')">${ico(k,58)}<span>${ING[k].l}</span></button>`).join('')}</div></div>`);
+}
+function rerenderPantry(){const y=window.scrollY;showPantry();window.scrollTo(0,y)}
+function addIng(k){
+ const r=R.recipe,t=target(k);
+ if(!t){R.errA=true;sfx.no();shake($('ing-'+k));toast(`Er hoort geen ${ING[k].l} in een ${r.name}!`);return}
+ const rect=$('ing-'+k).getBoundingClientRect();
+ R.bowl[k]=(R.bowl[k]||0)+1;rerenderPantry();fly(rect,'#bowl',k);
+ if(R.bowl[k]>t){R.errA=true;sfx.no();toast(`Oei, te veel ${ING[k].l}! Je hebt er maar ${t} nodig.`)}
+ else{sfx.pop();if(pantryDone()){sfx.ok();toast('Alles is er! Nu gaan mixen.',true)}}
+}
+function remIng(k){R.bowl[k]--;if(!R.bowl[k])delete R.bowl[k];sfx.pop();rerenderPantry()}
+
+/* ---------- mix ---------- */
+const STIRS=10;
+function mixKeys(){const out=[];Object.keys(R.recipe.ing).forEach(k=>{for(let i=0;i<Math.min(target(k),3);i++)out.push(k)});return out.slice(0,14)}
+function showMix(){
+ cur='mix';
+ frame(3,`<div class="panel center"><h2>Roer het beslag!</h2><p class="q">Klik ${STIRS} keer op de kom.</p>
+  <div class="mixbowl" id="mixbowl" onclick="stir()">${bowlSVG(0,mixKeys(),R.recipe.color,-20)}</div>
+  <div class="bar"><div id="mixbar"></div></div><p class="q" id="mixcount">0 / ${STIRS}</p><div id="mixnext"></div></div>`);
+}
+function stir(){
+ if(R.stirs>=STIRS)return;R.stirs++;sfx.pop();
+ const f=R.stirs/STIRS;
+ $('mixbowl').innerHTML=bowlSVG(f,mixKeys(),R.recipe.color,R.stirs%2?25:-25);
+ $('mixbar').style.width=f*100+'%';$('mixcount').textContent=`${R.stirs} / ${STIRS}`;
+ if(R.stirs===STIRS){sfx.ok();$('mixnext').innerHTML=`<button class="big" onclick="showOven()">In de vorm en naar de oven</button>`}
+}
+
+/* ---------- oven ---------- */
+function ovenInner(raw,grow){const r=R.recipe;const sc=grow||1;
+ return isCup(r)?cupSVG(r,{count:Math.min(R.cups,6),raw,nest:1,x:38,y:118-28*sc,w:124,h:62*sc}):cakeSVG(r,{raw,nest:1,x:100-52*sc,y:186-92*sc,w:104*sc,h:98*sc});}
+function showOven(){
+ cur='oven';const r=R.recipe;
+ frame(4,`<div class="grid2">
+  <div class="panel center" id="ovenctl"><h3>In het recept staat:</h3><p class="q">Bakken: <b>${r.min} minuten</b></p>
+   <p>Zet de oven op precies ${r.min} minuten.</p>
+   <div class="dial" id="dial">${R.oven} min</div>
+   <div class="btnrow"><button class="dbtn" onclick="dial(10)">+10</button><button class="dbtn" onclick="dial(5)">+5</button><button class="dbtn" onclick="dial(1)">+1</button><button class="dbtn" onclick="dial(-1)">−1</button><button class="dbtn" onclick="dial(0)">0</button></div>
+   <button class="big" onclick="ovenOn()">Oven aan!</button></div>
+  <div class="panel center" id="oven">${ovenSVG(false,ovenInner(true,.9),'')}</div></div>`);
+}
+function dial(n){R.oven=n===0?0:Math.max(0,Math.min(99,R.oven+n));$('dial').textContent=R.oven+' min';sfx.pop()}
+function ovenOn(){
+ const m=R.recipe.min;
+ if(R.oven===m){bake();return}
+ R.errB=true;sfx.no();shake($('dial'));
+ if(R.oven<m)toast(`Te kort! Je hebt ${R.oven} minuten. Het recept zegt ${m}. Hoeveel moet erbij?`);
+ else toast(`Te lang! Dan wordt de taart zwart. Je hebt ${R.oven}, het moet ${m} zijn.`);
+}
+function bake(){
+ $('ovenctl').style.pointerEvents='none';$('ovenctl').style.opacity=.6;sfx.ok();
+ let t=R.recipe.min;const step=Math.max(40,Math.round(3600/t));
+ const iv=setInterval(()=>{
+  if(cur!=='oven'){clearInterval(iv);return}
+  const f=1-t/R.recipe.min;
+  $('oven').innerHTML=ovenSVG(true,ovenInner(t>0,.9+f*.12),t+' min');
+  if(t===0){clearInterval(iv);sfx.ding();setTimeout(()=>{if(cur==='oven')showClock()},900)}
+  t--;
+ },step);
+}
+
+/* ---------- clock question ---------- */
+function timeText(totalMin){const h=Math.floor(totalMin/60),m=totalMin%60,hh=((h-1)%12)+1,nx=(h%12)+1;
+ return m===0?`${hh} uur`:m===15?`kwart over ${hh}`:m===30?`half ${nx}`:`kwart voor ${nx}`}
+function showClock(){
+ cur='clock';const r=R.recipe,end=R.start+r.min,cup=isCup(r);
+ const correct=timeText(end);
+ const pool=[15,30,45,60,75,90].map(x=>timeText(R.start+x)).filter(t=>t!==correct);
+ const nOpt=lvl()==='makkelijk'?1:2;
+ const opts=shuffle([{t:correct,ok:1},...shuffle(pool).slice(0,nOpt).map(t=>({t,ok:0}))]);
+ const q=`${cup?'De cupcakes gingen':'De taart ging'} om ${timeText(R.start)} de oven in. ${cup?'Ze bakten':'Hij bakte'} ${r.min} minuten. Hoe laat ${cup?'waren ze':'was hij'} klaar?`;
+ frame(4,`<div class="panel center"><h2>Ting! ${cup?'De cupcakes zijn':'De taart is'} klaar!</h2>
+  ${cakes(r,{w:cup?260:180})}
+  <p class="q">${cup?'De cupcakes gingen':'De taart ging'} om <b>${timeText(R.start)}</b> de oven in.<br>${cup?'Ze bakten':'Hij bakte'} <b>${r.min} minuten</b>. Hoe laat ${cup?'waren ze':'was hij'} klaar? ${spk(q)}</p>
+  ${clockSVG(R.start)}
+  <div class="opts">${opts.map((o,i)=>`<button class="opt" id="opt${i}" onclick="clockAns(${i},${o.ok})">${o.t}</button>`).join('')}</div>
+  <p class="small">Tip: 15 minuten = een kwartier · 30 minuten = een half uur · 60 minuten = een uur</p></div>`);
+ autoSay(q);
+}
+function clockAns(i,ok){
+ if(ok){sfx.ok();toast('Goed zo! Helemaal goed gerekend.',true);setTimeout(showDeco,900);return}
+ R.errB=true;sfx.no();shake($('opt'+i));toast('Nog niet. Tel kwartier voor kwartier verder vanaf '+timeText(R.start)+'.');
+}
+
+/* ---------- decorate ---------- */
+function showDeco(){
+ cur='deco';const r=R.recipe,w=R.wish;
+ frame(5,`<div class="panel center"><h2>Versier de ${isCup(r)?'cupcakes':'taart'}</h2>
+  ${w?`<div class="wish">${animalSVG(R.cust.n,'',40)} ${R.cust.n} wil: <b>${wishText(w)}</b></div>${spk(R.cust.n+' wil een taart '+wishText(w))}`:`<p class="small">Maak hem zo mooi als je wilt! Klik op de versiering.</p>`}
+  <div id="decocake">${cakes(r,{deco:R.deco,single:true,w:isCup(r)?330:260})}</div>
+  <div class="decos">${Object.entries(DECO).map(([k,d])=>`<button onclick="addDeco('${k}')">${ico(DI(k),50)}<small>${d[1]}</small></button>`).join('')}</div>
+  <p class="q" id="decocount"></p>
+  <div class="btnrow"><button class="big lila" onclick="clearDeco()">Alles eraf</button><button class="big" onclick="decoDone()">Klaar met versieren</button></div></div>`);
+ updDeco();
+}
+function updDeco(){const r=R.recipe;$('decocake').innerHTML=cakes(r,{deco:R.deco,single:true,w:isCup(r)?330:260});
+ const counts={};R.deco.forEach(k=>counts[k]=(counts[k]||0)+1);
+ $('decocount').textContent=R.deco.length?Object.entries(counts).map(([k,n])=>`${n} ${n===1?DECO[k][0]:DECO[k][1]}`).join(' · '):'';}
+function addDeco(k){if(R.deco.length>=(isCup(R.recipe)?12:10)){sfx.no();toast('Er past niets meer op! Haal er eerst wat af.');return}R.deco.push(k);sfx.pop();updDeco()}
+function clearDeco(){R.deco=[];sfx.pop();updDeco()}
+function decoDone(){
+ const w=R.wish;
+ if(w){const n=R.deco.filter(k=>k===w.k).length;
+  if(n!==w.n){if(!R.wishTried)R.errW=true;R.wishTried=true;sfx.no();shake($('decocake'));
+   toast(`${R.cust.n} wil ${NUM[w.n]} ${w.n===1?DECO[w.k][0]:DECO[w.k][1]}. Je hebt er ${n}. ${n<w.n?'Er moeten er nog '+(w.n-n)+' bij.':'Haal er '+(n-w.n)+' af.'}`);return}
+  R.wishTried=true;toast(`Precies wat ${R.cust.n} wilde!`,true);
+ }
+ sfx.ok();setTimeout(showFace,w?900:200);
+}
+
+/* ---------- face (last baking step, always 5 choices) ---------- */
+function showFace(){
+ cur='face';const r=R.recipe;
+ const col=r.color,ink=lum(col)<.42?'#fff6ec':L;
+ frame(6,`<div class="panel center"><h2>Kies een gezichtje</h2><p class="small">De laatste stap: welk gezichtje krijgt ${isCup(r)?'jouw cupcake':'jouw taart'}?</p>
+  <div id="facecake">${cakes(r,{deco:R.deco,face:R.face,single:true,w:isCup(r)?330:260})}</div>
+  <div class="faces">${FACES.map(([k,l])=>`<button class="facebtn ${R.face===k?'on':''}" onclick="pickFace('${k}')"><svg viewBox="0 0 64 64" width="74" height="74" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="${col}" stroke="${L}" stroke-width="3"/>${face(32,29,2.1,k,ink)}</svg><span>${l}</span></button>`).join('')}</div>
+  <button class="big" ${R.face?'':'disabled'} onclick="faceDone()">Dit gezichtje!</button></div>`);
+}
+function pickFace(k){R.face=k;sfx.pop();const y=window.scrollY;showFace();window.scrollTo(0,y)}
+function faceDone(){if(!R.face)return;sfx.ok();showWrite()}
+
+/* ---------- write name ---------- */
+function showWrite(){
+ cur='write';const r=R.recipe,c=R.cust,cup=isCup(r);
+ frame(7,`<div class="grid2"><div class="panel center">${cakes(r,{name:cup?undefined:'',deco:R.deco,face:R.face,single:true,w:cup?300:240})}${cup?`<div class="cupbox"><span id="cname"></span></div>`:''}</div>
+  <div class="panel center"><h2>Schrijf de naam op ${cup?'de doos':'de taart'}</h2>
+   <div class="bon"><b>Bestelbon</b>${animalSVG(c.n,'',64)}<span class="nm">${c.n}</span>${count()>1?count()+' × ':''}${r.name}</div>
+   <input class="txt" id="nameIn" maxlength="12" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Typ de naam" oninput="$('cname').textContent=this.value" onkeydown="if(event.key==='Enter')checkName()"><br>
+   <button class="big" onclick="checkName()">${cup?'Op de doos!':'Op de taart!'}</button></div></div>`);
+ setTimeout(()=>$('nameIn')&&$('nameIn').focus(),50);
+}
+function checkName(){
+ const v=$('nameIn').value.trim(),n=R.cust.n;
+ if(!v){shake($('nameIn'));toast('Typ eerst de naam.');return}
+ if(v.toLowerCase()===n.toLowerCase()){
+  R.written=v;sfx.ok();
+  toast(v[0]===v[0].toUpperCase()?'Prachtig! En met een hoofdletter, net als een echte naam.':'Goed geschreven! Tip: een naam begint met een hoofdletter.',true);
+  setTimeout(showPay,1300);return;
+ }
+ let i=0;while(i<v.length&&i<n.length&&v[i].toLowerCase()===n[i].toLowerCase())i++;
+ sfx.no();shake($('nameIn'));
+ toast(i>=n.length?'Er staan te veel letters. Kijk goed naar de bestelbon.':`Bijna! Kijk nog eens naar letter ${i+1}.`);
+}
+
+/* ---------- pay ---------- */
+function showPay(){
+ cur='pay';R.ans='';const r=R.recipe,c=R.cust,n=count(),two=n>1;
+ const q=two?`Een ${r.name} kost ${r.price} euro. ${c.n} koopt er ${NUM[n]} en betaalt met een briefje van ${R.paid} euro. Hoeveel wisselgeld krijgt ${c.n} terug?`:`Een ${r.name} kost ${r.price} euro. ${c.n} betaalt met een briefje van ${R.paid} euro. Hoeveel wisselgeld krijgt ${c.n} terug?`;
+ frame(8,`<div class="panel center"><h2>Afrekenen</h2>
+  <div class="payrow"><div class="tag">${thumb(r,64)}<div>${cap(r.name)}${two?' (per stuk)':''}</div><b>€ ${r.price}</b></div>${two?`<span class="times">× ${n}</span>`:''}${animalSVG(c.n,'',90)}${billSVG(R.paid)}</div>
+  <p class="q">${two?`${c.n} koopt er <b>${n}</b> en betaalt`:`${c.n} betaalt`} met een briefje van <b>€ ${R.paid}</b>.<br>Hoeveel wisselgeld krijgt ${c.n} terug? ${spk(q)}</p>
+  ${two&&lvl()==='makkelijk'?`<div class="hint">Samen kost dat ${n} × €${r.price} = €${R.total}</div><br>`:''}<div class="answer" id="ansbox">€ <span id="ans"></span></div>
+  <div class="keypad">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(k=>`<button class="${k==='✓'?'ok':''}" onclick="key('${k}')">${k}</button>`).join('')}</div></div>`);
+ autoSay(q);
+}
+function key(k){
+ if(k==='⌫')R.ans=R.ans.slice(0,-1);
+ else if(k==='✓'){checkPay();return}
+ else if(R.ans.length<2)R.ans+=k;
+ $('ans').textContent=R.ans;sfx.pop();
+}
+function checkPay(){
+ const want=R.paid-R.total;
+ if(R.ans==='')return;
+ if(Number(R.ans)===want){sfx.ok();showDone();return}
+ R.errB=true;sfx.no();shake($('ansbox'));R.ans='';$('ans').textContent='';
+ toast(count()>1?`Nog niet. Reken eerst: ${count()} × ${R.recipe.price} = ? Tel dan verder tot ${R.paid}.`:`Nog niet. Tel verder: van ${R.total} naar ${R.paid}. Hoeveel stappen is dat?`);
+}
+document.addEventListener('keydown',e=>{
+ if(cur!=='pay'||$('ov'))return;
+ if(/^[0-9]$/.test(e.key))key(e.key);else if(e.key==='Backspace')key('⌫');else if(e.key==='Enter')key('✓');
+});
+
+/* ---------- done ---------- */
+function showDone(){
+ cur='done';const r=R.recipe,c=R.cust,cup=isCup(r);
+ const wishStar=R.wish&&!R.errW?1:0;
+ const n=1+(R.errA?0:1)+(R.errB?0:1)+wishStar;
+ const before=S.stars;S.stars+=n;S.baked++;S.coins+=R.total;S.counts[r.id]=(S.counts[r.id]||0)+count();save();
+ const fresh=RECIPES.filter(x=>x.need>before&&x.need<=S.stars);
+ const line=(ok,t)=>`<div class="${ok?'':'off'}">${starI(22,!ok)} ${t}${ok?'':' (volgende keer!)'}</div>`;
+ const say2=(cup||R.qty===2)?FACE_SAY[R.face].replace('Hij ','Ze ').replace('knipoogt','knipogen').replace('lacht','lachen').replace('kijkt','kijken').replace('steekt zijn','steken hun'):FACE_SAY[R.face];
+ frame(9,`<div class="panel center"><div class="blockc">${animalSVG(c.n,'happy',170)}</div>
+  <div class="bubble">Dankjewel! Wat ${cup?'lekkere cupcakes':R.qty===2?'mooie taarten':'een mooie '+r.name}! ${say2}</div>
+  ${cakes(r,{name:cup?undefined:R.written,deco:R.deco,face:R.face,w:cup?300:220})}${cup?`<div class="cupbox">${esc(R.written)}</div>`:''}
+  <h2>Je verdient ${n} ${n===1?'ster':'sterren'}! ${Array(n).fill(starI(30)).join('')}</h2>
+  <div class="earned">${line(true,'Bestelling geleverd')}${line(!R.errA,'Goed gezocht')}${line(!R.errB,'Goed gerekend')}${R.wish?line(!R.errW,'Wens vervuld'):''}</div>
+  <p class="q">${coinI(26)} + €${R.total} in je spaarpot (nu €${S.coins})</p>
+  ${fresh.map(x=>`<div class="unlock"><h3>Nieuw recept: ${cap(x.name)}!</h3>${thumb(x,120)}</div>`).join('')}
+  <div class="btnrow"><button class="big" onclick="newRound()">Volgende klant</button><button class="big lila" onclick="showHome()">Naar huis</button></div></div>`);
+ sfx.win();confetti();
+}
+
+showHome();
+
+/* ---------- app: offline + terugknop ---------- */
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+try{history.pushState({g:1},'');window.addEventListener('popstate',()=>{history.pushState({g:1},'');if($('ov')){closeParent();return}if(cur!=='home')showHome()})}catch(e){}
+</script>
+</body>
+</html>

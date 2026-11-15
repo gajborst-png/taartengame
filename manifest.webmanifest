@@ -1,0 +1,17 @@
+{
+  "name": "Taartenbakkerij",
+  "short_name": "Taarten",
+  "description": "Bak taarten en cupcakes op bestelling en oefen lezen, schrijven en rekenen.",
+  "lang": "nl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#fff3f8",
+  "theme_color": "#ff9ec0",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
