@@ -419,6 +419,7 @@ const LEVELS={makkelijk:'Makkelijk',normaal:'Normaal',uitdaging:'Uitdaging'};
 
 const DEF={stars:0,baked:0,bakery:'',coins:0,items:[],counts:{},set:{sound:true,voice:false,level:'normaal'}};
 let S=load(),R=null,cur='',resetArmed=false;
+const HIST=[],CHIST=[];/* laatste recepten en klanten: willekeurig, maar nooit 3x dezelfde taart of snel dezelfde klant */
 function load(){let s={};try{s=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){}
  const o=Object.assign({},DEF,s);o.set=Object.assign({},DEF.set,s.set||{});o.items=Array.isArray(o.items)?o.items:[];o.counts=o.counts||{};
  if(typeof o.stars!=='number')o.stars=0;if(typeof o.coins!=='number')o.coins=0;return o}
@@ -566,8 +567,10 @@ function resetGame(){if(!resetArmed){resetArmed=true;$('rs').textContent='Zeker 
 /* ---------- round ---------- */
 function newRound(){
  const L_=lvl(),ul=unlocked();
- let r=pick(ul);if(R&&ul.length>1)while(r===R.recipe)r=pick(ul);
- let c=pick(CUST);if(R)while(c.n===R.cust.n)c=pick(CUST);
+ let r=pick(ul);while(ul.length>1&&HIST.length>=2&&HIST.slice(-2).every(id=>id===r.id))r=pick(ul);
+ HIST.push(r.id);if(HIST.length>5)HIST.shift();
+ let c=pick(CUST);while(CHIST.includes(c.n))c=pick(CUST);
+ CHIST.push(c.n);if(CHIST.length>4)CHIST.shift();
  const cupOpts={makkelijk:[2,3,4],normaal:[2,3,4,5,6],uitdaging:[4,5,6,8,10,12]}[L_];
  const cups=isCup(r)?pick(cupOpts):0;
  const qty=isCup(r)?(cups>6?2:1):(L_==='uitdaging'&&S.baked>=2&&Math.random()<.35?2:1);
@@ -817,7 +820,6 @@ function showDone(){
 }
 
 showHome();
-
 /* ---------- app: offline + terugknop ---------- */
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
 try{history.pushState({g:1},'');window.addEventListener('popstate',()=>{history.pushState({g:1},'');if($('ov')){closeParent();return}if(cur!=='home')showHome()})}catch(e){}
